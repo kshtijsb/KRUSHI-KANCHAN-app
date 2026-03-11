@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Krushi Kanchan</title>
+  <style>
+    :root {
+      --green: #4CAF50;
+      --green-dark: #2E7D32;
+      --green-light: #A5D6A7;
+      --text: #333;
+      --bg: #f4f9f4;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar img {
+      width: 60px;
+      margin-bottom: 30px;
+      align-self: center;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .sidebar a:hover, .sidebar a.active {
+      background: var(--green-light);
+      color: var(--green-dark);
+    }
+
+    .logout-btn {
+      margin-top: auto;
+      background: #ffebee;
+      color: #d32f2f;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #ffcdd2;
+    }
+
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      color: var(--green-dark);
+      font-size: 2rem;
+    }
+
+    .dashboard-card {
+      background: white;
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+
+    .dashboard-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: var(--green-dark);
+      border-bottom: 2px solid var(--green-light);
+      padding-bottom: 10px;
+      display: inline-block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--green);
+    }
+
+    .btn-save {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    .btn-save:hover {
+      background: var(--green-dark);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #333;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Ensure user is logged in via token verification -->
+  <script>
+    const token = localStorage.getItem('krushi_token');
+    if (!token) {
+      window.location.href = 'admin-login.html';
+    } else {
+      // Fast check before full page load
+      fetch('/api/auth/verify', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      .then(res => {
+        if(!res.ok) window.location.href = 'admin-login.html';
+      })
+      .catch(() => window.location.href = 'admin-login.html');
+    }
+  </script>
+
+  <div class="sidebar">
+    <img src="images/Gemini Generated Image.png" alt="Logo">
+    <a href="#" class="tab-link active" onclick="showTab('home')">मुख्य पान (Home Info)</a>
+    <a href="#" class="tab-link" onclick="showTab('products')">उत्पादने (Products)</a>
+    <a href="#" class="tab-link" onclick="showTab('brands')">ब्रँड्स (Brands)</a>
+    <a href="#" class="tab-link" onclick="showTab('contact')">संपर्क सेटिंग्ज (Contact)</a>
+    
+    <a href="#" class="logout-btn" onclick="logout()">लॉग आउट (Logout)</a>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>डॅशबोर्ड (Dashboard)</h1>
+      <a href="index.html" target="_blank" style="color: var(--green); text-decoration: none; font-weight: bold;">वेबसाइट पहा (View Site) →</a>
+    </header>
+
+    <div id="home" class="tab-content active">
+      <div class="dashboard-card">
+        <h3>मुख्य मथळा (Hero Section)</h3>
+        <div class="form-group">
+          <label>मुख्य शीर्षक (Main Title)</label>
+          <input type="text" id="heroTitle" value="शेतकऱ्यांसाठी विश्वासार्ह कृषी सेवा आणि दर्जेदार उत्पादने">
+        </div>
+        <div class="form-group">
+          <label>उपशीर्षक (Subtitle)</label>
+          <textarea id="heroSubtitle">कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके, तणनाशके आणि पीक संरक्षणासाठी आवश्यक उपाय उपलब्ध आहेत.</textarea>
+        </div>
+        <button class="btn-save" onclick="saveContent('hero')">जतन करा (Save Changes)</button>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>आमच्याबद्दल (About Us)</h3>
+        <div class="form-group">
+          <label>परिचय मजकूर (Introduction Text)</label>
+          <textarea id="aboutText">कृषि कांचन हे शेतकऱ्यांसाठी अस्सल कृषी औषधे, खते, कीटकनाशके आणि पीक संरक्षण उत्पादने उपलब्ध करून देणारे विश्वासार्ह केंद्र आहे. आम्ही नामांकित MNC ब्रँड्सची उत्पादने, योग्य माहिती आणि शेतकरी-केंद्रित सेवा देण्यावर भर देतो.</textarea>
+        </div>
+        <button class="btn-save" onclick="saveContent('about')">जतन करा (Save Changes)</button>
+      </div>
+      
+      <!-- Admin Management Section -->
+      <div class="dashboard-card" style="border-left: 4px solid var(--green); margin-top: 50px;">
+        <h3>नवीन अ‍ॅडमिन जोडा (Add New Admin)</h3>
+        <div class="form-group">
+          <label>नवीन युझरनेम (New Username)</label>
+          <input type="text" id="newAdminUser" placeholder="username">
+        </div>
+        <div class="form-group">
+          <label>पासवर्ड (Password)</label>
+          <input type="password" id="newAdminPass" placeholder="password">
+        </div>
+        <button class="btn-save" onclick="registerAdmin()" style="background: var(--text);">अ‍ॅडमिन जोडा (Create Admin)</button>
+      </div>
+    </div>
+
+    <!-- Products Tab -->
+    <div id="products" class="tab-content">
+      <div class="dashboard-card">
+        <h3>नवीन उत्पादन जोडा (Add Product)</h3>
+        <form id="productForm" onsubmit="addProduct(event)">
+          <div class="form-group">
+            <label>नाव (Name)</label>
+            <input type="text" id="prodName" required>
+          </div>
+          <div class="form-group">
+            <label>वर्ग (Category)</label>
+            <select id="prodCategory" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+              <option value="FERTILIZER">खते (Fertilizer)</option>
+              <option value="PESTICIDE">कीटकनाशके (Pesticide)</option>
+              <option value="FUNGICIDE">बुरशीनाशके (Fungicide)</option>
+              <option value="HERBICIDE">तणनाशके (Herbicide)</option>
+              <option value="SEED">बियाणे (Seed)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>वर्णन (Description)</label>
+            <textarea id="prodDesc"></textarea>
+          </div>
+          <div class="form-group">
+            <label>चित्र (Image Upload)</label>
+            <input type="file" id="prodImage" accept="image/*">
+          </div>
+          <button type="submit" class="btn-save" style="margin-top: 10px;">उत्पादन जोडा (Add)</button>
+        </form>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>विद्यमान उत्पादने (Existing Products)</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;" id="productsTable">
+          <thead>
+            <tr style="background: var(--green-light); text-align: left;">
+              <th style="padding: 10px; border-bottom: 2px solid var(--green);">नाव (Name)</th>
+              <th style="padding: 10px; border-bottom: 2px solid var(--green);">वर्ग (Category)</th>
+              <th style="padding: 10px; border-bottom: 2px solid var(--green);">क्रिया (Action)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Brands Tab -->
+    <div id="brands" class="tab-content">
+      <div class="dashboard-card">
+        <h3>नवीन ब्रँड जोडा (Add Brand)</h3>
+        <form id="brandForm" onsubmit="addBrand(event)">
+          <div class="form-group">
+            <label>नाव (Name)</label>
+            <input type="text" id="brandName" required>
+          </div>
+          <div class="form-group">
+            <label>वेबसाइट (Website URL)</label>
+            <input type="url" id="brandUrl" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label>लोगो (Logo Upload)</label>
+            <input type="file" id="brandImage" accept="image/*">
+          </div>
+          <button type="submit" class="btn-save" style="margin-top: 10px;">ब्रँड जोडा (Add)</button>
+        </form>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>विद्यमान ब्रँड्स (Existing Brands)</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;" id="brandsTable">
+          <thead>
+            <tr style="background: var(--green-light); text-align: left;">
+              <th style="padding: 10px; border-bottom: 2px solid var(--green);">नाव (Name)</th>
+              <th style="padding: 10px; border-bottom: 2px solid var(--green);">क्रिया (Action)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="contact" class="tab-content">
+      <div class="dashboard-card">
+        <h3>संपर्क माहिती (Contact Info)</h3>
+        <div class="form-group">
+          <label>सेवा क्षेत्र (Service Area)</label>
+          <input type="text" id="contactArea" value="सातारा, कोरेगाव आणि भिलार">
+        </div>
+        <div class="form-group">
+          <label>मोबाईल व WhatsApp नंबर (Mobile & WhatsApp Number)</label>
+          <input type="text" id="contactMobile" value="9420630236">
+        </div>
+        <div class="form-group">
+          <label>ईमेल (Email)</label>
+          <input type="email" id="contactEmail" value="Krushikanchan@gmail.com">
+        </div>
+        <button class="btn-save" onclick="saveContent('contact')">जतन करा (Save Changes)</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="toast" class="toast">✅ बदल जतन केले! (Saved!)</div>
+
+  <script>
+    const authToken = localStorage.getItem('krushi_token');
+
+    // Load content from server
+    window.onload = async function() {
+      try {
+        const res = await fetch('/api/content');
+        if (res.ok) {
+          const data = await res.json();
+          
+          if(data.heroTitle) document.getElementById('heroTitle').value = data.heroTitle;
+          if(data.heroSubtitle) document.getElementById('heroSubtitle').value = data.heroSubtitle;
+          if(data.aboutText) document.getElementById('aboutText').value = data.aboutText;
+          if(data.contactArea) document.getElementById('contactArea').value = data.contactArea;
+          if(data.contactMobile) document.getElementById('contactMobile').value = data.contactMobile;
+          if(data.contactEmail) document.getElementById('contactEmail').value = data.contactEmail;
+        }
+      } catch (error) {
+        console.error("Failed to load content from server", error);
+      }
+      
+      loadProducts();
+      loadBrands();
+    };
+
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    async function loadProducts() {
+      const res = await fetch('/api/products');
+      const products = await res.json();
+      const tbody = document.querySelector('#productsTable tbody');
+      tbody.innerHTML = '';
+      products.forEach(p => {
+        tbody.innerHTML += `
+          <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 10px;">${p.name}</td>
+            <td style="padding: 10px;">${p.category}</td>
+            <td style="padding: 10px;"><button onclick="deleteProduct(${p.id})" style="color: red; cursor: pointer; border: none; background: none;">काढून टाका (Delete)</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    async function addProduct(e) {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('name', document.getElementById('prodName').value);
+      formData.append('category', document.getElementById('prodCategory').value);
+      formData.append('description', document.getElementById('prodDesc').value);
+      const img = document.getElementById('prodImage').files[0];
+      if (img) formData.append('image', img);
+
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${authToken}` },
+        body: formData
+      });
+      if (res.ok) {
+        showToast();
+        e.target.reset();
+        loadProducts();
+      } else alert("Failed to add product");
+    }
+
+    async function deleteProduct(id) {
+       if(!confirm("Are you sure?")) return;
+       const res = await fetch(`/api/products/${id}`, {
+         method: 'DELETE',
+         headers: { 'Authorization': `Bearer ${authToken}` }
+       });
+       if (res.ok) loadProducts();
+    }
+
+    async function loadBrands() {
+      const res = await fetch('/api/brands');
+      const brands = await res.json();
+      const tbody = document.querySelector('#brandsTable tbody');
+      tbody.innerHTML = '';
+      brands.forEach(b => {
+        tbody.innerHTML += `
+          <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 10px;">${b.name}</td>
+            <td style="padding: 10px;"><button onclick="deleteBrand(${b.id})" style="color: red; cursor: pointer; border: none; background: none;">काढून टाका (Delete)</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    async function addBrand(e) {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('name', document.getElementById('brandName').value);
+      formData.append('website_url', document.getElementById('brandUrl').value);
+      const img = document.getElementById('brandImage').files[0];
+      if (img) formData.append('image', img);
+
+      const res = await fetch('/api/brands', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${authToken}` },
+        body: formData
+      });
+      if (res.ok) {
+        showToast();
+        e.target.reset();
+        loadBrands();
+      } else alert("Failed to add brand");
+    }
+
+    async function deleteBrand(id) {
+       if(!confirm("Are you sure?")) return;
+       const res = await fetch(`/api/brands/${id}`, {
+         method: 'DELETE',
+         headers: { 'Authorization': `Bearer ${authToken}` }
+       });
+       if (res.ok) loadBrands();
+    }
+
+    async function saveContent(section) {
+      let payload = {};
+
+      if(section === 'hero') {
+        payload.heroTitle = document.getElementById('heroTitle').value;
+        payload.heroSubtitle = document.getElementById('heroSubtitle').value;
+      } else if (section === 'about') {
+        payload.aboutText = document.getElementById('aboutText').value;
+      } else if (section === 'contact') {
+        payload.contactArea = document.getElementById('contactArea').value;
+        payload.contactMobile = document.getElementById('contactMobile').value;
+        payload.contactEmail = document.getElementById('contactEmail').value;
+      }
+
+      try {
+        const response = await fetch('/api/content', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          showToast();
+        } else {
+          const data = await response.json();
+          alert("Error saving: " + (data.error || 'Unknown error'));
+        }
+      } catch (error) {
+        console.error("Save error", error);
+        alert("Network error while saving.");
+      }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    async function registerAdmin() {
+      const newUser = document.getElementById('newAdminUser').value;
+      const newPass = document.getElementById('newAdminPass').value;
+
+      if(!newUser || !newPass) {
+        alert("Please fill both username and password.");
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({ new_username: newUser, new_password: newPass })
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+          alert("New Admin Created Successfully!");
+          document.getElementById('newAdminUser').value = '';
+          document.getElementById('newAdminPass').value = '';
+        } else {
+          alert("Error: " + (data.error || 'Failed to create admin'));
+        }
+      } catch (error) {
+        console.error("Register error", error);
+        alert("Network error while creating admin.");
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('krushi_token');
+      window.location.href = 'admin-login.html';
+    }
+  </script>
+
+</body>
+</html>
