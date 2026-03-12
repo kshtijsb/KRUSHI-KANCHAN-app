@@ -17,12 +17,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const productsRoutes = require('./routes/products');
 const brandsRoutes = require('./routes/brands');
+const leadsRoutes = require('./routes/leads');
 
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/brands', brandsRoutes);
+app.use('/api/leads', leadsRoutes);
 
 // Health Check / Debug Route
 app.get('/debug/health', async (req, res) => {

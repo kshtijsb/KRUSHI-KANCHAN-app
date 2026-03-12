@@ -34,5 +34,15 @@ CREATE TABLE IF NOT EXISTS brands (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Note: Since you provided the Service Role Key, these tables will be accessible 
--- to your backend without needing further RLS policies.
+-- 5. Create leads table
+CREATE TABLE IF NOT EXISTS leads (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    location TEXT NOT NULL,
+    crop TEXT NOT NULL,
+    duration TEXT,
+    area NUMERIC,
+    status TEXT DEFAULT 'NEW',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

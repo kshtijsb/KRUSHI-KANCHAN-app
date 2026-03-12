@@ -216,6 +216,7 @@
     <a href="#" class="tab-link active" onclick="showTab('home')">मुख्य पान (Home Info)</a>
     <a href="#" class="tab-link" onclick="showTab('products')">उत्पादने (Products)</a>
     <a href="#" class="tab-link" onclick="showTab('brands')">ब्रँड्स (Brands)</a>
+    <a href="#" class="tab-link" onclick="showTab('leads')">लीड्स (Leads)</a>
     <a href="#" class="tab-link" onclick="showTab('contact')">संपर्क सेटिंग्ज (Contact)</a>
 
     <a href="#" class="logout-btn" onclick="logout()">लॉग आउट (Logout)</a>
@@ -351,6 +352,29 @@
       </div>
     </div>
 
+    <!-- Leads Tab -->
+    <div id="leads" class="tab-content">
+      <div class="dashboard-card">
+        <h3>शेतकरी इंक्वायरी (Farmer Leads)</h3>
+        <p style="margin-bottom: 20px; color: #666;">वेबसाइटवरून आलेल्या चौकशीची यादी खालीलप्रमाणे आहे.</p>
+        
+        <table style="width: 100%; border-collapse: collapse;" id="leadsTable">
+          <thead>
+            <tr style="background: var(--green-light); text-align: left;">
+              <th style="padding: 12px; border-bottom: 2px solid var(--green);">दिनांक (Date)</th>
+              <th style="padding: 12px; border-bottom: 2px solid var(--green);">नाव (Name)</th>
+              <th style="padding: 12px; border-bottom: 2px solid var(--green);">संपर्क (Contact)</th>
+              <th style="padding: 12px; border-bottom: 2px solid var(--green);">स्थिती (Status)</th>
+              <th style="padding: 12px; border-bottom: 2px solid var(--green);">क्रिया (Action)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Leads will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <div id="contact" class="tab-content">
       <div class="dashboard-card">
         <h3>संपर्क माहिती (Contact Info)</h3>
@@ -397,6 +421,7 @@
 
       loadProducts();
       loadBrands();
+      loadLeads();
     };
 
     function showTab(tabId) {
@@ -571,6 +596,75 @@
         console.error("Register error", error);
         alert("Network error while creating admin.");
       }
+    }
+
+    async function loadLeads() {
+      const res = await fetch('/api/leads', {
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      });
+      const leads = await res.json();
+      const tbody = document.querySelector('#leadsTable tbody');
+      tbody.innerHTML = '';
+      
+      leads.forEach(l => {
+        const date = new Date(l.created_at).toLocaleDateString('en-IN');
+        let statusClass = '';
+        if (l.status === 'NEW') statusClass = 'background: #fff3e0; color: #e65100; font-weight: bold; padding: 4px 8px; border-radius: 4px;';
+        else if (l.status === 'DONE') statusClass = 'background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px;';
+
+        tbody.innerHTML += `
+          <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 12px;">${date}</td>
+            <td style="padding: 12px;">
+              <strong>${l.name}</strong><br>
+              <small>${l.location}</small>
+            </td>
+            <td style="padding: 12px;">
+              <a href="tel:${l.phone}">${l.phone}</a><br>
+              <a href="https://wa.me/91${l.phone}" target="_blank" style="color: #25d366; font-size: 12px;">WhatsApp</a>
+            </td>
+            <td style="padding: 12px;">
+              <select onchange="updateLeadStatus(${l.id}, this.value)" style="${statusClass}">
+                <option value="NEW" ${l.status === 'NEW' ? 'selected' : ''}>NEW</option>
+                <option value="CONTACTED" ${l.status === 'CONTACTED' ? 'selected' : ''}>CONTACTED</option>
+                <option value="DONE" ${l.status === 'DONE' ? 'selected' : ''}>DONE</option>
+              </select>
+            </td>
+            <td style="padding: 12px;">
+              <button onclick="viewLeadDetail(${JSON.stringify(l).replace(/"/g, '&quot;')})" style="color: var(--green-dark); cursor: pointer; border: none; background: none; margin-right: 10px;">View</button>
+              <button onclick="deleteLead(${l.id})" style="color: red; cursor: pointer; border: none; background: none;">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    async function updateLeadStatus(id, newStatus) {
+      const res = await fetch(`/api/leads/${id}`, {
+        method: 'PATCH',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}` 
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        showToast();
+        loadLeads();
+      }
+    }
+
+    async function deleteLead(id) {
+      if (!confirm("Are you sure?")) return;
+      const res = await fetch(`/api/leads/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      });
+      if (res.ok) loadLeads();
+    }
+
+    function viewLeadDetail(lead) {
+      alert(`Lead Details:\n\nName: ${lead.name}\nPhone: ${lead.phone}\nLocation: ${lead.location}\nCrop: ${lead.crop}\nDuration: ${lead.duration || 'N/A'}\nArea: ${lead.area || 'N/A'} acres`);
     }
 
     function logout() {

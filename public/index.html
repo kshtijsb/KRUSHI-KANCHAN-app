@@ -349,15 +349,12 @@
 
 
     .brand-item {
-      width: 180px;
-      flex-shrink: 0;
-      width: 100%;
-      max-width: 200px;
-      margin: 0 auto;
+      flex: 0 0 180px;
+      margin: 0 10px;
       background: white;
       border-radius: 16px;
       height: 150px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -365,6 +362,8 @@
       padding: 24px 16px 16px;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       cursor: pointer;
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
 
     .brand-item:hover {
@@ -667,6 +666,71 @@
       }
     }
 
+    /* Weather Widget Styles */
+    .weather-card {
+      background: white;
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      border: 1px solid var(--green-soft);
+    }
+    .weather-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .temp {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--green-dark);
+    }
+    .weather-desc {
+      font-size: 20px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    .weather-icon img {
+      width: 80px;
+    }
+    .weather-meta {
+      display: flex;
+      gap: 20px;
+      color: #666;
+    }
+
+    /* Expert Advice Button */
+    .expert-whatsapp {
+      background: #25D366;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+    .expert-whatsapp:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: #128C7E;
+    }
+    
+    .expert-whatsapp svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+
     /* New Feature CSS */
     .floating-whatsapp {
       position: fixed;
@@ -715,7 +779,8 @@
       display: flex;
       align-items: center;
       position: relative;
-      padding: 10px 0;
+      padding: 20px 0;
+      perspective: 1500px;
     }
 
     .brands-marquee-wrapper::before,
@@ -723,9 +788,9 @@
       content: "";
       position: absolute;
       top: 0;
-      width: 80px;
+      width: 120px;
       height: 100%;
-      z-index: 2;
+      z-index: 5;
       pointer-events: none;
     }
 
@@ -741,9 +806,9 @@
 
     .brands-marquee {
       display: flex;
-      gap: 20px;
       width: max-content;
-      animation: marquee 40s linear infinite;
+      animation: marquee 50s linear infinite;
+      transform-style: preserve-3d;
     }
 
     .brands-marquee:hover {
@@ -752,11 +817,11 @@
 
     @keyframes marquee {
       0% {
-        transform: translateX(0);
+        transform: translateZ(0) translateX(0);
       }
 
       100% {
-        transform: translateX(-50%);
+        transform: translateZ(0) translateX(-50%);
       }
     }
 
@@ -887,8 +952,24 @@
         संरक्षणासाठी आवश्यक उपाय
         उपलब्ध आहेत.</p>
       <div class="btn-group">
-        <a class="btn btn-primary" href="#contact">आत्ताच संपर्क करा</a>
+        <a class="btn btn-primary" href="#farmer-info">आत्ताच संपर्क करा</a>
         <a class="btn btn-secondary" href="#brands">आमचे ब्रँड्स</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weather Utility Section -->
+  <section id="utility" class="reveal" style="padding-top: 40px; padding-bottom: 0;">
+    <div class="weather-card">
+      <h2 class="section-title" style="margin-bottom: 5px;">हवामान अंदाज (Weather)</h2>
+      <p style="margin-bottom: 10px;">कोरेगाव, सातारा परिसरातील हवामान</p>
+      <div id="weatherBody" class="weather-info">
+        <div class="temp">--°C</div>
+        <div class="weather-desc">Loading...</div>
+      </div>
+      <div class="weather-meta" id="weatherMeta">
+        <span>वारा: -- km/h</span>
+        <span>आद्रता: --%</span>
       </div>
     </div>
   </section>
@@ -935,38 +1016,40 @@
 
   <section id="farmer-info" class="reveal">
     <h2 class="section-title">शेतकरी माहिती</h2>
-    <p class="section-sub">अधिक माहिती आणि मार्गदर्शनासाठी तुमची माहिती खाली भरा.</p>
-    <div class="form-container">
-      <!-- Hidden iframe to prevent page redirect on submit -->
-      <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
-        onload="if(submitted) { showToast('तुमची माहिती यशस्वीरित्या सेव्ह झाली आहे. धन्यवाद!'); setTimeout(() => window.location='', 3500); }"></iframe>
+    <p class="section-sub">तज्ञ मार्गदर्शनासाठी तुमची माहिती भरा किंवा थेट WhatsApp वर संपर्क साधा.</p>
+    
+    <div style="text-align: center; margin-bottom: 40px;">
+      <a href="https://wa.me/919420630236?text=नमस्ते%20कृषि%20कांचन,%20मला%20पीक%20सल्ल्यासाठी%20मदत%20हवी%20आहे." class="expert-whatsapp" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        पिकाबद्दल तज्ञ सल्ला घ्या (WhatsApp Expert Advice)
+      </a>
+    </div>
 
-      <form
-        action="https://docs.google.com/forms/d/e/1FAIpQLSdOWVkKUH2Rer1tslKS6Zy0L-uYDAvM2c2Ru-N4IGeQ-Q3DhQ/formResponse"
-        method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+    <div class="form-container">
+      <form id="leadForm">
         <div class="form-group">
           <label for="fname">संपूर्ण नाव</label>
-          <input type="text" id="fname" name="entry.819877120" required>
+          <input type="text" id="fname" required>
         </div>
         <div class="form-group">
           <label for="phone">मोबाईल नंबर</label>
-          <input type="tel" id="phone" name="entry.1411556169" required>
+          <input type="tel" id="phone" required>
         </div>
         <div class="form-group">
           <label for="location">गाव / पत्ता</label>
-          <input type="text" id="location" name="entry.1129227971" required>
+          <input type="text" id="location" required>
         </div>
         <div class="form-group">
           <label for="crop">पिकाचा प्रकार</label>
-          <input type="text" id="crop" name="entry.1753150750" required>
+          <input type="text" id="crop" required>
         </div>
         <div class="form-group">
           <label for="duration">पिकाचा कालावधी</label>
-          <input type="text" id="duration" name="entry.80538486" placeholder="उदा. ३ महिने" required>
+          <input type="text" id="duration" placeholder="उदा. ३ महिने">
         </div>
         <div class="form-group">
           <label for="area">शेतीचे क्षेत्र (एकर)</label>
-          <input type="number" id="area" name="entry.1059142018" step="0.1" required>
+          <input type="number" id="area" step="0.1">
         </div>
         <button type="submit" class="btn btn-primary btn-submit">माहिती सबमिट करा</button>
       </form>
@@ -1243,7 +1326,12 @@
         // Duplicate for seamless scroll
         marquee.innerHTML = brandHtml + brandHtml;
 
+        // Force an initial filter application to ensure visibility
+        const activeFilterBtn = document.querySelector('#productFilters .filter-btn.active');
+        if (activeFilterBtn) activeFilterBtn.click();
+
         attachLightboxEvents();
+        console.log("Dynamic content loaded successfully");
       } catch (e) {
         console.error("Failed to load dynamic store items", e);
       }
@@ -1283,9 +1371,86 @@
         item.classList.toggle('active');
       });
     });
+    // 9. Weather Logic
+    async function fetchWeather() {
+      const weatherBody = document.getElementById('weatherBody');
+      const weatherMeta = document.getElementById('weatherMeta');
+      
+      try {
+        // Using wttr.in with JSON format
+        const res = await fetch('https://wttr.in/Koregaon,Satara?format=j1');
+        const data = await res.json();
+        const current = data.current_condition[0];
+        
+        const temp = current.temp_C;
+        const desc = current.weatherDesc[0].value;
+        const humidity = current.humidity;
+        const wind = current.windspeedKmph;
+        
+        weatherBody.innerHTML = `
+          <div class="temp">${temp}°C</div>
+          <div class="weather-desc">${desc}</div>
+        `;
+        weatherMeta.innerHTML = `
+          <span>वारा: ${wind} km/h</span>
+          <span>आद्रता: ${humidity}%</span>
+        `;
+      } catch (e) {
+        console.error("Weather fetch failed", e);
+        weatherBody.innerHTML = '<div class="weather-desc">Weather data unavailable</div>';
+      }
+    }
+
+    // 10. Lead Form Submission
+    const leadForm = document.getElementById('leadForm');
+    if (leadForm) {
+      leadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = leadForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerText;
+        
+        submitBtn.innerText = 'कृपया थांबा...';
+        submitBtn.disabled = true;
+
+        const payload = {
+          name: document.getElementById('fname').value,
+          phone: document.getElementById('phone').value,
+          location: document.getElementById('location').value,
+          crop: document.getElementById('crop').value,
+          duration: document.getElementById('duration').value,
+          area: document.getElementById('area').value
+        };
+
+        try {
+          const res = await fetch('/api/leads', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (res.ok) {
+            showToast('तुमची माहिती यशस्वीरित्या जतन झाली आहे. धन्यवाद!');
+            leadForm.reset();
+            // Reset validation styles
+            leadForm.querySelectorAll('input').forEach(input => input.classList.remove('valid-input', 'invalid-input'));
+          } else {
+            const err = await res.json();
+            alert("Error: " + (err.error || "Failed to submit"));
+          }
+        } catch (error) {
+          console.error("Lead submission error", error);
+          alert("Network error. Please try again later.");
+        } finally {
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+    }
+
     // Load Admin content overrides from API
     window.addEventListener('DOMContentLoaded', async () => {
       loadDynamicStoreContent();
+      fetchWeather();
 
       try {
         const res = await fetch('/api/content');
