@@ -6,27 +6,53 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.warn("WARNING: Supabase URL or Key is missing. Please check your .env file or Render environment variables.");
+  console.warn("WARNING: Supabase URL or Key is missing. Check .env or Render ENV vars.");
+} else {
+  console.log("Supabase connection initialized with URL:", supabaseUrl);
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Helper to seed data if a table is empty
 async function seedData() {
   if (!supabaseUrl || !supabaseKey) return;
 
+  console.log("Supabase: Starting seeding process...");
+
   try {
     // 1. Seed Default Admin
-    const { data: adminExists } = await supabase.from('admins').select('id').eq('username', 'admin').maybeSingle();
-    if (!adminExists) {
+    const { data: adminData, error: adminError } = await supabase
+      .from('admins')
+      .select('username')
+      .eq('username', 'admin')
+      .maybeSingle();
+
+    if (adminError) {
+      console.error("Supabase Error (checking admin):", adminError.message);
+    } else if (!adminData) {
+      console.log("Supabase: Creating default admin user...");
       const hash = await bcrypt.hash('krushi123', 10);
-      await supabase.from('admins').insert([{ username: 'admin', password: hash }]);
-      console.log("Supabase: Default admin account created (admin/krushi123).");
+      const { error: insertError } = await supabase
+        .from('admins')
+        .insert([{ username: 'admin', password: hash }]);
+      
+      if (insertError) {
+        console.error("Supabase Error (creating admin):", insertError.message);
+      } else {
+        console.log("Supabase: Default admin account created (admin/krushi123).");
+      }
+    } else {
+      console.log("Supabase: Admin user already exists.");
     }
 
     // 2. Seed Default Content
-    const { count: contentCount } = await supabase.from('site_content').select('*', { count: 'exact', head: true });
-    if (contentCount === 0) {
+    const { count: contentCount, error: contentError } = await supabase
+      .from('site_content')
+      .select('*', { count: 'exact', head: true });
+    
+    if (contentError) {
+      console.error("Supabase Error (checking content):", contentError.message);
+    } else if (contentCount === 0) {
+      console.log("Supabase: Seeding default site content...");
       const defaultContent = [
         { key: 'heroTitle', value: 'शेतकऱ्यांसाठी विश्वासार्ह कृषी सेवा आणि दर्जेदार उत्पादने' },
         { key: 'heroSubtitle', value: 'कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके, तणनाशके आणि पीक संरक्षणासाठी आवश्यक उपाय उपलब्ध आहेत.' },
@@ -35,13 +61,19 @@ async function seedData() {
         { key: 'contactMobile', value: '9420630236' },
         { key: 'contactEmail', value: 'Krushikanchan@gmail.com' }
       ];
-      await supabase.from('site_content').insert(defaultContent);
-      console.log("Supabase: Default site content seeded.");
+      const { error: insertContentError } = await supabase.from('site_content').insert(defaultContent);
+      if (insertContentError) console.error("Supabase Error (seeding content):", insertContentError.message);
     }
 
     // 3. Seed Products
-    const { count: prodCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
-    if (prodCount === 0) {
+    const { count: prodCount, error: prodError } = await supabase
+      .from('products')
+      .select('*', { count: 'exact', head: true });
+
+    if (prodError) {
+      console.error("Supabase Error (checking products):", prodError.message);
+    } else if (prodCount === 0) {
+      console.log("Supabase: Seeding default products...");
       const defaultProducts = [
         { name: 'खते', description: 'जमिनीची सुपीकता वाढवण्यासाठी आणि पिकांची जोमदार वाढीसाठी दर्जेदार खते.', image_path: 'images/FERT.jpg', category: 'FERTILIZER' },
         { name: 'कीटकनाशके', description: 'पिकांना हानी करणाऱ्या किडींवर प्रभावी नियंत्रण.', image_path: 'images/pest.jpg', category: 'PESTICIDE' },
@@ -50,12 +82,17 @@ async function seedData() {
         { name: 'बियाणे', description: 'उत्तम आणि भरघोस उत्पादनासाठी उच्च दर्जाचे और निवडक बियाणे.', image_path: 'images/seeds.jpg', category: 'SEED' }
       ];
       await supabase.from('products').insert(defaultProducts);
-      console.log("Supabase: Default products seeded.");
     }
 
     // 4. Seed Brands
-    const { count: brandCount } = await supabase.from('brands').select('*', { count: 'exact', head: true });
-    if (brandCount === 0) {
+    const { count: brandCount, error: brandError } = await supabase
+      .from('brands')
+      .select('*', { count: 'exact', head: true });
+
+    if (brandError) {
+      console.error("Supabase Error (checking brands):", brandError.message);
+    } else if (brandCount === 0) {
+      console.log("Supabase: Seeding default brands...");
       const defaultBrands = [
         { name: 'BAYER', image_path: 'images/byer.svg', website_url: 'https://www.bayer.com/en/agriculture' },
         { name: 'FMC', image_path: 'images/fmc.webp', website_url: 'https://www.fmc.com/' },
@@ -71,14 +108,15 @@ async function seedData() {
         { name: 'YARA INTERNATIONAL', image_path: 'images/yara-logo-shield-only-1.svg', website_url: 'https://www.yara.com/' }
       ];
       await supabase.from('brands').insert(defaultBrands);
-      console.log("Supabase: Default brands seeded.");
     }
+    
+    console.log("Supabase: Seeding process completed.");
+
   } catch (err) {
-    console.error("Supabase Seeding Error:", err);
+    console.error("Supabase Seeding Exception:", err);
   }
 }
 
-// Re-export seed call
 seedData();
 
 module.exports = supabase;
