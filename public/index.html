@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> कृषिकांचन | कृषी सेवा केंद्र</title>
+  <title> कृषि कांचन | कृषी सेवा केंद्र</title>
   <style>
     :root {
       --green: #a9c7a3;
@@ -828,6 +828,7 @@
       <a href="#home" class="logo" translate="no">
         <img src="images/Gemini Generated Image.png" alt="Krushikanchan Logo" class="header-logo">
         <div>कृषि <span>कांचन</span></div>
+        <div>Krushi<span>Kanchan</span></div>
       </a>
       <nav>
         <a href="#home">मुखपृष्ठ</a>
@@ -844,7 +845,8 @@
   <section class="hero" id="home">
     <div class="hero-content">
       <h1 id="displayHeroTitle">शेतकऱ्यांसाठी विश्वासार्ह कृषी सेवा आणि दर्जेदार उत्पादने</h1>
-      <p id="displayHeroSubtitle">कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके, तणनाशके आणि पीक संरक्षणासाठी आवश्यक उपाय
+      <p id="displayHeroSubtitle">कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके, तणनाशके आणि पीक
+        संरक्षणासाठी आवश्यक उपाय
         उपलब्ध आहेत.</p>
       <div class="btn-group">
         <a class="btn btn-primary" href="#contact">आत्ताच संपर्क करा</a>
@@ -968,9 +970,12 @@
     <h2 class="section-title">संपर्क</h2>
     <div class="contact-box">
       <p><strong>सेवा क्षेत्र:</strong> <span id="displayContactArea">सातारा, कोरेगाव आणि भिलार</span></p>
-      <p><strong>मोबाईल:</strong> <a href="tel:9420630236" class="dynamic-tel-link"><span class="dynamic-mobile-text">9420630236</span></a></p>
-      <p><strong>WhatsApp:</strong> <a href="https://wa.me/919420630236" class="dynamic-wa-link" target="_blank"><span class="dynamic-mobile-text">9420630236</span></a></p>
-      <p><strong>ईमेल:</strong> <a href="mailto:Krushikanchan@gmail.com" class="dynamic-email-link"><span class="dynamic-email-text">Krushikanchan@gmail.com</span></a></p>
+      <p><strong>मोबाईल:</strong> <a href="tel:9420630236" class="dynamic-tel-link"><span
+            class="dynamic-mobile-text">9420630236</span></a></p>
+      <p><strong>WhatsApp:</strong> <a href="https://wa.me/919420630236" class="dynamic-wa-link" target="_blank"><span
+            class="dynamic-mobile-text">9420630236</span></a></p>
+      <p><strong>ईमेल:</strong> <a href="mailto:Krushikanchan@gmail.com" class="dynamic-email-link"><span
+            class="dynamic-email-text">Krushikanchan@gmail.com</span></a></p>
       <p><strong>सूचना:</strong> कृषी औषधांचा वापर तज्ञांच्या सल्ल्याने करावा.</p>
       <a class="btn btn-primary dynamic-wa-link" href="https://wa.me/919420630236" target="_blank"
         style="margin-top: 15px; display: inline-block;">WhatsApp वर संपर्क करा</a>
@@ -996,8 +1001,8 @@
   </footer>
 
 
-  <a href="https://wa.me/919420630236" class="floating-whatsapp dynamic-wa-link" target="_blank" title="WhatsApp वर संपर्क करा"
-    aria-label="WhatsApp">
+  <a href="https://wa.me/919420630236" class="floating-whatsapp dynamic-wa-link" target="_blank"
+    title="WhatsApp वर संपर्क करा" aria-label="WhatsApp">
     <svg viewBox="0 0 32 32">
       <path
         d="M16 2.002a13.982 13.982 0 00-11.892 21.36l-2.062 7.538 7.712-2.022A13.957 13.957 0 0016 30.002c7.732 0 14-6.268 14-14s-6.268-14-14-14zm0 25.64c-2.454 0-4.792-.638-6.848-1.856l-.492-.292-5.094 1.336 1.352-4.966-.32-.51a11.583 11.583 0 01-2.23-6.992c0-6.425 5.215-11.64 11.64-11.64s11.64 5.215 11.64 11.64-5.215 11.64-11.64 11.64zm6.364-8.682c-.348-.174-2.064-1.018-2.384-1.134-.32-.116-.552-.174-.784.174-.232.348-.9 1.134-1.104 1.366-.204.232-.408.26-.756.088-.348-.174-1.472-.544-2.804-1.734-.1-.09-.204-.184-.31-.284-1.226-1.144-1.636-1.558-1.84-1.906-.204-.348-.022-.536.152-.71.156-.156.348-.406.522-.61.174-.204.232-.348.348-.58.116-.232.058-.436-.03-.61-.088-.174-.784-1.892-1.074-2.59-.282-.682-.572-.59-.784-.6-.2-.01-.432-.01-.664-.01s-.61.088-.93.436c-.32.348-1.22 1.192-1.22 2.906s1.25 3.37 1.424 3.6c.174.232 2.45 3.742 5.936 5.244.83.358 1.48.572 1.986.732.834.266 1.594.228 2.194.138.67-.1 2.064-.842 2.354-1.654.29-.812.29-1.508.204-1.654-.088-.146-.32-.232-.668-.406z" />
@@ -1186,7 +1191,7 @@
         const brands = await brandRes.json();
         const marquee = document.getElementById('brandsMarquee');
         marquee.innerHTML = '';
-        
+
         let brandHtml = '';
         brands.forEach(b => {
           brandHtml += `
@@ -1243,39 +1248,39 @@
     // Load Admin content overrides from API
     window.addEventListener('DOMContentLoaded', async () => {
       loadDynamicStoreContent();
-      
+
       try {
         const res = await fetch('/api/content');
         if (res.ok) {
           const data = await res.json();
-          
-          if(data.heroTitle) {
+
+          if (data.heroTitle) {
             const title = document.getElementById('displayHeroTitle');
-            if(title) title.innerText = data.heroTitle;
+            if (title) title.innerText = data.heroTitle;
           }
-          if(data.heroSubtitle) {
+          if (data.heroSubtitle) {
             const sub = document.getElementById('displayHeroSubtitle');
-            if(sub) sub.innerText = data.heroSubtitle;
+            if (sub) sub.innerText = data.heroSubtitle;
           }
-          if(data.aboutText) {
+          if (data.aboutText) {
             const abt = document.getElementById('displayAboutText');
-            if(abt) abt.innerText = data.aboutText;
+            if (abt) abt.innerText = data.aboutText;
           }
 
           // Contact details
-          if(data.contactArea) {
+          if (data.contactArea) {
             const area = document.getElementById('displayContactArea');
-            if(area) area.innerText = data.contactArea;
+            if (area) area.innerText = data.contactArea;
           }
-          
-          if(data.contactMobile) {
+
+          if (data.contactMobile) {
             const mob = data.contactMobile;
             document.querySelectorAll('.dynamic-mobile-text').forEach(el => el.innerText = mob);
             document.querySelectorAll('.dynamic-tel-link').forEach(el => el.href = `tel:${mob}`);
             document.querySelectorAll('.dynamic-wa-link').forEach(el => el.href = `https://wa.me/91${mob}`);
           }
-          
-          if(data.contactEmail) {
+
+          if (data.contactEmail) {
             const em = data.contactEmail;
             document.querySelectorAll('.dynamic-email-text').forEach(el => el.innerText = em);
             document.querySelectorAll('.dynamic-email-link').forEach(el => el.href = `mailto:${em}`);
@@ -1289,4 +1294,5 @@
   </script>
 
 </body>
+
 </html>
