@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const supabase = require('../database');
+const db = require('../database');
 const { verifyToken } = require('./auth');
 
 // Configure Multer for image uploads
@@ -18,21 +18,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // GET all products
-router.get('/', async (req, res) => {
-    try {
-        const { data: rows, error } = await supabase
-            .from('products')
-            .select('*');
-
-        if (error) return res.status(500).json({ error: error.message });
+router.get('/', (req, res) => {
+    db.all("SELECT * FROM products", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: 'Server error fetching products.' });
         res.json(rows);
-    } catch (err) {
-        res.status(500).json({ error: 'Server error fetching products.' });
-    }
+    });
 });
 
 // POST a new product (Protected)
-router.post('/', verifyToken, upload.single('image'), async (req, res) => {
+router.post('/', verifyToken, upload.single('image'), (req, res) => {
     const { name, description, category } = req.body;
     if (!name || !category) {
         return res.status(400).json({ error: 'Name and category are required.' });
@@ -43,32 +37,22 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
         image_path = 'images/' + req.file.filename;
     }
 
-    try {
-        const { data, error } = await supabase
-            .from('products')
-            .insert([{ name, description, image_path, category }])
-            .select();
-
-        if (error) return res.status(500).json({ error: error.message });
-        res.status(201).json({ message: 'Product added successfully', id: data[0].id });
-    } catch (err) {
-        res.status(500).json({ error: 'Server error adding product.' });
-    }
+    db.run("INSERT INTO products (name, description, image_path, category) VALUES (?, ?, ?, ?)",
+        [name, description, image_path, category],
+        function(err) {
+            if (err) return res.status(500).json({ error: 'Server error adding product.' });
+            res.status(201).json({ message: 'Product added successfully', id: this.lastID });
+        }
+    );
 });
 
 // DELETE a product (Protected)
-router.delete('/:id', verifyToken, async (req, res) => {
-    try {
-        const { error } = await supabase
-            .from('products')
-            .delete()
-            .eq('id', req.params.id);
-
-        if (error) return res.status(500).json({ error: error.message });
+router.delete('/:id', verifyToken, (req, res) => {
+    db.run("DELETE FROM products WHERE id = ?", [req.params.id], function(err) {
+        if (err) return res.status(500).json({ error: 'Server error deleting product.' });
         res.json({ message: 'Product deleted successfully' });
-    } catch (err) {
-        res.status(500).json({ error: 'Server error deleting product.' });
-    }
+    });
 });
 
 module.exports = router;
+
