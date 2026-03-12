@@ -50,8 +50,11 @@ app.get('/debug/health', async (req, res) => {
 
 
 
-// If an API route wasn't matched, send the index.html
+// If an API route wasn't matched, send the index.html (except for /api routes)
 app.use((req, res) => {
+    if (req.path.startsWith('/api/')) {
+        return res.status(404).json({ error: `API route not found: ${req.path}` });
+    }
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

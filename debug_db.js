@@ -11,6 +11,10 @@ async function debug() {
     const { data: brands, error: bError } = await supabase.from('brands').select('*');
     console.log("BRANDS:", brands);
     if (bError) console.error("B ERROR:", bError);
+
+    const { data: leads, error: lError } = await supabase.from('leads').select('*').limit(1);
+    console.log("LEADS CHECK:", leads);
+    if (lError) console.error("L ERROR:", lError);
 }
 
 debug();
