@@ -711,44 +711,35 @@
     <h2 class="section-title">कंपन्यांसाठी संपर्क फॉर्म</h2>
     <p class="section-sub">नवीन भागीदारीसाठी खालील फॉर्म भरा, आमची टीम लवकरच तुमच्याशी संपर्क साधेल.</p>
     <div class="form-container">
-      <iframe name="hidden_company_iframe" id="hidden_company_iframe" style="display:none;"
-        onload="if(companySubmitted) { showToast('तुमची माहिती यशस्वीरित्या सेव्ह झाली आहे. आमची टीम लवकरच तुमच्याशी संपर्क साधेल. धन्यवाद!'); setTimeout(() => window.location='', 3500); }"></iframe>
-
-      <form
-        action="https://docs.google.com/forms/d/e/1FAIpQLSf67bXL-E9_zB_L87Dwz9KlnGFrjue3ARJNNgLT1gy0YSW7oQ/formResponse"
-        method="POST" target="hidden_company_iframe"
-        onsubmit="companySubmitted=true;">
+      <form id="companyLeadForm">
         <div class="form-group">
-          <label for="company_name">कंपनीचे नाव</label>
-          <input type="text" id="company_name" name="entry.798788288" required>
+          <label for="company_name">कंपनीचे नाव (Company Name)</label>
+          <input type="text" id="company_name" required>
         </div>
         <div class="form-group">
-          <label for="contact_person">संपर्क व्यक्तीचे नाव</label>
-          <input type="text" id="contact_person" name="entry.1635657823" required>
+          <label for="contact_person">संपर्क व्यक्तीचे नाव (Contact Person)</label>
+          <input type="text" id="contact_person" required>
         </div>
         <div class="form-group">
-          <label for="phone">मोबाईल / फोन नंबर</label>
-          <input type="tel" id="phone" name="entry.227203117" required>
+          <label for="phone">मोबाईल / फोन नंबर (Phone)</label>
+          <input type="tel" id="pc_phone" required>
         </div>
         <div class="form-group">
-          <label for="email">ईमेल आयडी</label>
-          <input type="email" id="email" name="entry.1123290568" required>
+          <label for="email">ईमेल आयडी (Email)</label>
+          <input type="email" id="email" required>
         </div>
         <div class="form-group">
-          <label for="product_type">उत्पादनाचा प्रकार (उदा. खते, बियाणे, कीटकनाशके)</label>
-          <input type="text" id="product_type" name="entry.1323654507" required>
+          <label for="product_type">उत्पादनाचा प्रकार (Product Type)</label>
+          <input type="text" id="product_type" placeholder="उदा. खते, बियाणे, कीटकनाशके" required>
         </div>
         <div class="form-group">
-          <label for="message">संदेश</label>
-          <input type="text" id="message" name="entry.527460886" style="height: 100px; padding-bottom: 70px;" required>
+          <label for="message">संदेश (Message)</label>
+          <textarea id="pc_message" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; min-height: 100px;" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary btn-submit">माहिती पाठवा</button>
+        <button type="submit" class="btn btn-primary btn-submit" id="pc_submit_btn">माहिती पाठवा (Send Inquiry)</button>
       </form>
     </div>
   </section>
-
-  <!-- Script variable for iframe submission tracking -->
-  <script>var companySubmitted = false;</script>
 
   <section id="contact" class="reveal">
     <h2 class="section-title">संपर्क</h2>

@@ -362,6 +362,7 @@
           <thead>
             <tr style="background: var(--green-light); text-align: left;">
               <th style="padding: 12px; border-bottom: 2px solid var(--green);">दिनांक (Date)</th>
+              <th style="padding: 12px; border-bottom: 2px solid var(--green);">प्रकार (Type)</th>
               <th style="padding: 12px; border-bottom: 2px solid var(--green);">नाव (Name)</th>
               <th style="padding: 12px; border-bottom: 2px solid var(--green);">संपर्क (Contact)</th>
               <th style="padding: 12px; border-bottom: 2px solid var(--green);">स्थिती (Status)</th>
@@ -616,12 +617,17 @@
           <tr style="border-bottom: 1px solid #ddd;">
             <td style="padding: 12px;">${date}</td>
             <td style="padding: 12px;">
+              <span style="font-size: 11px; padding: 2px 6px; border-radius: 4px; background: ${l.lead_type === 'COMPANY' ? '#e1f5fe; color: #01579b;' : '#f1f8e9; color: #33691e;'}">
+                ${l.lead_type || 'FARMER'}
+              </span>
+            </td>
+            <td style="padding: 12px;">
               <strong>${l.name}</strong><br>
-              <small>${l.location}</small>
+              <small>${l.contact_person ? 'CP: ' + l.contact_person : l.location}</small>
             </td>
             <td style="padding: 12px;">
               <a href="tel:${l.phone}">${l.phone}</a><br>
-              <a href="https://wa.me/91${l.phone}" target="_blank" style="color: #25d366; font-size: 12px;">WhatsApp</a>
+              <small>${l.email || ''}</small>
             </td>
             <td style="padding: 12px;">
               <select onchange="updateLeadStatus(${l.id}, this.value)" style="${statusClass}">
@@ -664,7 +670,22 @@
     }
 
     function viewLeadDetail(lead) {
-      alert(`Lead Details:\n\nName: ${lead.name}\nPhone: ${lead.phone}\nLocation: ${lead.location}\nCrop: ${lead.crop}\nDuration: ${lead.duration || 'N/A'}\nArea: ${lead.area || 'N/A'} acres`);
+      let msg = `Lead Details (${lead.lead_type || 'FARMER'}):\n\n`;
+      msg += `Name: ${lead.name}\n`;
+      if (lead.contact_person) msg += `Contact Person: ${lead.contact_person}\n`;
+      msg += `Phone: ${lead.phone}\n`;
+      if (lead.email) msg += `Email: ${lead.email}\n`;
+      
+      if (lead.lead_type === 'COMPANY') {
+          msg += `Product Type: ${lead.crop}\n`;
+          msg += `Message: ${lead.message || 'N/A'}\n`;
+      } else {
+          msg += `Location: ${lead.location}\n`;
+          msg += `Crop: ${lead.crop}\n`;
+          msg += `Duration: ${lead.duration || 'N/A'}\n`;
+          msg += `Area: ${lead.area || 'N/A'} acres\n`;
+      }
+      alert(msg);
     }
 
     function logout() {

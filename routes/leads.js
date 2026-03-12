@@ -5,22 +5,32 @@ const { verifyToken } = require('./auth');
 
 // POST a new lead (Public)
 router.post('/', async (req, res) => {
-    const { name, phone, location, crop, duration, area } = req.body;
+    const { 
+        name, phone, location, crop, 
+        duration, area, 
+        lead_type = 'FARMER', // FARMER or COMPANY
+        contact_person, email, message 
+    } = req.body;
     
-    if (!name || !phone || !location || !crop) {
-        return res.status(400).json({ error: 'Name, phone, location and crop are required.' });
+    // Basic validation
+    if (!name || !phone) {
+        return res.status(400).json({ error: 'Name and phone are required.' });
     }
 
     try {
         const { data, error } = await supabase
             .from('leads')
-            .insert([{ name, phone, location, crop, duration, area }])
+            .insert([{ 
+                name, phone, location, crop, 
+                duration, area, 
+                lead_type, contact_person, email, message 
+            }])
             .select();
 
         if (error) return res.status(500).json({ error: error.message });
-        res.status(201).json({ message: 'Lead submitted successfully', id: data[0].id });
+        res.status(201).json({ message: 'Inquiry submitted successfully', id: data[0].id });
     } catch (err) {
-        res.status(500).json({ error: 'Server error submitting lead.' });
+        res.status(500).json({ error: 'Server error submitting inquiry.' });
     }
 });
 
