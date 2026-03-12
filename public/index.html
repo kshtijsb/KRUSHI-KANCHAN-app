@@ -704,6 +704,43 @@
       color: #666;
     }
 
+    .weather-search {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .weather-search input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .weather-search input:focus {
+      border-color: var(--green);
+    }
+
+    .weather-search button {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .weather-search button:hover {
+      background: var(--green-dark);
+    }
+
     /* Expert Advice Button */
     .expert-whatsapp {
       background: #25D366;
@@ -962,7 +999,13 @@
   <section id="utility" class="reveal" style="padding-top: 40px; padding-bottom: 0;">
     <div class="weather-card">
       <h2 class="section-title" style="margin-bottom: 5px;">हवामान अंदाज (Weather)</h2>
-      <p style="margin-bottom: 10px;">कोरेगाव, सातारा परिसरातील हवामान</p>
+      
+      <div class="weather-search">
+        <input type="text" id="cityInput" placeholder="शहराचे नाव प्रविष्ट करा (Enter City Name)" onkeypress="if(event.key === 'Enter') searchWeather()">
+        <button onclick="searchWeather()">शोधा (Search)</button>
+      </div>
+
+      <p id="weatherCityName" style="margin-bottom: 10px;">कोरेगाव, सातारा परिसरातील हवामान</p>
       <div id="weatherBody" class="weather-info">
         <div class="temp">--°C</div>
         <div class="weather-desc">Loading...</div>
@@ -1372,21 +1415,34 @@
       });
     });
     // 9. Weather Logic
-    async function fetchWeather() {
+    async function fetchWeather(city = 'Koregaon,Satara') {
       const weatherBody = document.getElementById('weatherBody');
       const weatherMeta = document.getElementById('weatherMeta');
+      const weatherCityName = document.getElementById('weatherCityName');
       
       try {
         // Using wttr.in with JSON format
-        const res = await fetch('https://wttr.in/Koregaon,Satara?format=j1');
+        const res = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
         const data = await res.json();
+        
+        if (!data.current_condition) throw new Error("Invalid city");
+
         const current = data.current_condition[0];
         
         const temp = current.temp_C;
         const desc = current.weatherDesc[0].value;
         const humidity = current.humidity;
         const wind = current.windspeedKmph;
+
+        // Extract city name from nearest_area if available
+        let displayCity = city;
+        if (data.nearest_area && data.nearest_area[0]) {
+            const area = data.nearest_area[0];
+            displayCity = area.areaName[0].value + (area.region ? `, ${area.region[0].value}` : '');
+        }
         
+        if (weatherCityName) weatherCityName.innerText = displayCity + " परिसरातील हवामान";
+
         weatherBody.innerHTML = `
           <div class="temp">${temp}°C</div>
           <div class="weather-desc">${desc}</div>
@@ -1399,6 +1455,13 @@
         console.error("Weather fetch failed", e);
         weatherBody.innerHTML = '<div class="weather-desc">Weather data unavailable</div>';
       }
+    }
+
+    function searchWeather() {
+        const cityInput = document.getElementById('cityInput');
+        if (cityInput.value.trim()) {
+            fetchWeather(cityInput.value.trim());
+        }
     }
 
     // 10. Lead Form Submission
