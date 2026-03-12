@@ -2,38 +2,45 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const db = require('../database');
+const supabase = require('../database');
 
-const JWT_SECRET = 'super_secret_krushikanchan_key_change_in_production';
+const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_krushikanchan_key_change_in_production';
 
 // Login Endpoint
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password required.' });
     }
 
-    db.get('SELECT * FROM admins WHERE username = ?', [username], (err, admin) => {
-        if (err || !admin) {
+    try {
+        const { data: admin, error } = await supabase
+            .from('admins')
+            .select('*')
+            .eq('username', username)
+            .maybeSingle();
+
+        if (error || !admin) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
 
         // Compare password with hashed admin password
-        bcrypt.compare(password, admin.password, (err, isValid) => {
-            if (!isValid) {
-                return res.status(401).json({ error: 'Invalid credentials.' });
-            }
+        const isValid = await bcrypt.compare(password, admin.password);
+        if (!isValid) {
+            return res.status(401).json({ error: 'Invalid credentials.' });
+        }
 
-            // Generate JWT Token
-            const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: '8h' });
+        // Generate JWT Token
+        const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: '8h' });
 
-            res.json({ message: 'Login successful', token });
-        });
-    });
+        res.json({ message: 'Login successful', token });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error during login.' });
+    }
 });
 
-// Middleware to verify JWT Token (can be exported for reuse)
+// Middleware to verify JWT Token
 const verifyToken = (req, res, next) => {
     const bearerHeader = req.headers['authorization'];
     
@@ -58,29 +65,36 @@ router.get('/verify', verifyToken, (req, res) => {
 });
 
 // Register New Admin Endpoint (Protected)
-router.post('/register', verifyToken, (req, res) => {
+router.post('/register', verifyToken, async (req, res) => {
     const { new_username, new_password } = req.body;
 
     if (!new_username || !new_password) {
         return res.status(400).json({ error: 'Username and password required.' });
     }
 
-    db.get('SELECT * FROM admins WHERE username = ?', [new_username], (err, admin) => {
-        if (admin) {
+    try {
+        const { data: existingAdmin } = await supabase
+            .from('admins')
+            .select('id')
+            .eq('username', new_username)
+            .maybeSingle();
+
+        if (existingAdmin) {
              return res.status(400).json({ error: 'Username already exists.' });
         }
 
-        bcrypt.hash(new_password, 10, (err, hash) => {
-            if (err) return res.status(500).json({ error: 'Error hashing password' });
+        const hash = await bcrypt.hash(new_password, 10);
+        const { error } = await supabase
+            .from('admins')
+            .insert([{ username: new_username, password: hash }]);
 
-            db.run('INSERT INTO admins (username, password) VALUES (?, ?)', [new_username, hash], function(err) {
-                if (err) {
-                    return res.status(500).json({ error: 'Failed to create user.' });
-                }
-                res.status(201).json({ message: 'New admin created successfully.' });
-            });
-        });
-    });
+        if (error) {
+            return res.status(500).json({ error: 'Failed to create user.' });
+        }
+        res.status(201).json({ message: 'New admin created successfully.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error during registration.' });
+    }
 });
 
 module.exports = router;
