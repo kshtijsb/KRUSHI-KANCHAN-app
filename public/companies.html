@@ -113,6 +113,7 @@
       object-fit: cover;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
 
     .logo:hover .header-logo {
@@ -483,6 +484,12 @@
     }
 
     @media (max-width:768px) {
+      .nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 10px;
+      }
+
       .hero h1 {
         font-size: 34px
       }
@@ -492,11 +499,21 @@
       }
 
       .logo {
-        font-size: 24px
+        font-size: 24px;
+        justify-content: center;
       }
 
       nav {
-        text-align: center
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+      }
+      
+      nav a {
+        margin: 5px 8px;
+        font-size: 14px;
       }
     }
   
