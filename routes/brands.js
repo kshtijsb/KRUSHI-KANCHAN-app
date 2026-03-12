@@ -5,17 +5,12 @@ const path = require('path');
 const supabase = require('../database');
 const { verifyToken } = require('./auth');
 
-// Configure Multer for image uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../public/images'));
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, 'brand-' + uniqueSuffix + path.extname(file.originalname));
-  }
+// Configure Multer for memory storage
+const storage = multer.memoryStorage();
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
-const upload = multer({ storage: storage });
 
 // GET all brands
 router.get('/', async (req, res) => {
@@ -40,7 +35,33 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
     
     let image_path = '';
     if (req.file) {
-        image_path = 'images/' + req.file.filename;
+        try {
+            const fileExt = path.extname(req.file.originalname);
+            const fileName = `brand-${Date.now()}-${Math.floor(Math.random() * 1000)}${fileExt}`;
+            const filePath = `brands/${fileName}`;
+
+            const { data: uploadData, error: uploadError } = await supabase.storage
+                .from('images')
+                .upload(filePath, req.file.buffer, {
+                    contentType: req.file.mimetype,
+                    upsert: false
+                });
+
+            if (uploadError) {
+                console.error('Supabase Storage Error:', uploadError);
+                return res.status(500).json({ error: 'Failed to upload brand image' });
+            }
+
+            // Get Public URL
+            const { data: { publicUrl } } = supabase.storage
+                .from('images')
+                .getPublicUrl(filePath);
+            
+            image_path = publicUrl;
+        } catch (err) {
+            console.error('Upload catch error:', err);
+            return res.status(500).json({ error: 'Internal upload error' });
+        }
     }
 
     try {
@@ -55,6 +76,7 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
         res.status(500).json({ error: 'Server error adding brand.' });
     }
 });
+
 
 // DELETE a brand (Protected)
 router.delete('/:id', verifyToken, async (req, res) => {
