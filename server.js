@@ -24,6 +24,27 @@ app.use('/api/content', contentRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/brands', brandsRoutes);
 
+// Health Check / Debug Route
+app.get('/debug/health', async (req, res) => {
+    const config = {
+        supabaseUrl: process.env.SUPABASE_URL ? 'PRESENT' : 'MISSING',
+        supabaseKey: process.env.SUPABASE_KEY ? 'PRESENT' : 'MISSING',
+        jwtSecret: process.env.JWT_SECRET ? 'PRESENT' : 'MISSING'
+    };
+    
+    try {
+        const { data, error } = await db.from('admins').select('count', { count: 'exact', head: true });
+        res.json({
+            status: error ? 'ERROR' : 'CONNECTED',
+            config,
+            dbError: error ? error.message : null,
+            adminCount: data || 0
+        });
+    } catch (err) {
+        res.status(500).json({ status: 'EXCEPTION', config, error: err.message });
+    }
+});
+
 // If an API route wasn't matched, send the index.html
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
