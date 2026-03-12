@@ -34,7 +34,7 @@
     .sidebar {
       width: 250px;
       background: white;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -56,7 +56,8 @@
       transition: all 0.3s;
     }
 
-    .sidebar a:hover, .sidebar a.active {
+    .sidebar a:hover,
+    .sidebar a.active {
       background: var(--green-light);
       color: var(--green-dark);
     }
@@ -80,6 +81,7 @@
     .tab-content {
       display: none;
     }
+
     .tab-content.active {
       display: block;
     }
@@ -131,7 +133,8 @@
       color: #555;
     }
 
-    .form-group input, .form-group textarea {
+    .form-group input,
+    .form-group textarea {
       width: 100%;
       padding: 12px;
       border: 1px solid #ddd;
@@ -146,7 +149,8 @@
       min-height: 100px;
     }
 
-    .form-group input:focus, .form-group textarea:focus {
+    .form-group input:focus,
+    .form-group textarea:focus {
       outline: none;
       border-color: var(--green);
     }
@@ -185,7 +189,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
   </style>
 </head>
 
@@ -201,10 +204,10 @@
       fetch('/api/auth/verify', {
         headers: { 'Authorization': `Bearer ${token}` }
       })
-      .then(res => {
-        if(!res.ok) window.location.href = 'admin-login.html';
-      })
-      .catch(() => window.location.href = 'admin-login.html');
+        .then(res => {
+          if (!res.ok) window.location.href = 'admin-login.html';
+        })
+        .catch(() => window.location.href = 'admin-login.html');
     }
   </script>
 
@@ -214,14 +217,15 @@
     <a href="#" class="tab-link" onclick="showTab('products')">उत्पादने (Products)</a>
     <a href="#" class="tab-link" onclick="showTab('brands')">ब्रँड्स (Brands)</a>
     <a href="#" class="tab-link" onclick="showTab('contact')">संपर्क सेटिंग्ज (Contact)</a>
-    
+
     <a href="#" class="logout-btn" onclick="logout()">लॉग आउट (Logout)</a>
   </div>
 
   <div class="main-content">
     <header>
       <h1>डॅशबोर्ड (Dashboard)</h1>
-      <a href="index.html" target="_blank" style="color: var(--green); text-decoration: none; font-weight: bold;">वेबसाइट पहा (View Site) →</a>
+      <a href="index.html" target="_blank"
+        style="color: var(--green); text-decoration: none; font-weight: bold;">वेबसाइट पहा (View Site) →</a>
     </header>
 
     <div id="home" class="tab-content active">
@@ -233,7 +237,8 @@
         </div>
         <div class="form-group">
           <label>उपशीर्षक (Subtitle)</label>
-          <textarea id="heroSubtitle">कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके, तणनाशके आणि पीक संरक्षणासाठी आवश्यक उपाय उपलब्ध आहेत.</textarea>
+          <textarea
+            id="heroSubtitle">कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके, तणनाशके आणि पीक संरक्षणासाठी आवश्यक उपाय उपलब्ध आहेत.</textarea>
         </div>
         <button class="btn-save" onclick="saveContent('hero')">जतन करा (Save Changes)</button>
       </div>
@@ -242,11 +247,12 @@
         <h3>आमच्याबद्दल (About Us)</h3>
         <div class="form-group">
           <label>परिचय मजकूर (Introduction Text)</label>
-          <textarea id="aboutText">कृषि कांचन हे शेतकऱ्यांसाठी अस्सल कृषी औषधे, खते, कीटकनाशके आणि पीक संरक्षण उत्पादने उपलब्ध करून देणारे विश्वासार्ह केंद्र आहे. आम्ही नामांकित MNC ब्रँड्सची उत्पादने, योग्य माहिती आणि शेतकरी-केंद्रित सेवा देण्यावर भर देतो.</textarea>
+          <textarea
+            id="aboutText">कृषि कांचन हे शेतकऱ्यांसाठी अस्सल कृषी औषधे, खते, कीटकनाशके आणि पीक संरक्षण उत्पादने उपलब्ध करून देणारे विश्वासार्ह केंद्र आहे. आम्ही नामांकित MNC ब्रँड्सची उत्पादने, योग्य माहिती आणि शेतकरी-केंद्रित सेवा देण्यावर भर देतो.</textarea>
         </div>
         <button class="btn-save" onclick="saveContent('about')">जतन करा (Save Changes)</button>
       </div>
-      
+
       <!-- Admin Management Section -->
       <div class="dashboard-card" style="border-left: 4px solid var(--green); margin-top: 50px;">
         <h3>नवीन अ‍ॅडमिन जोडा (Add New Admin)</h3>
@@ -258,7 +264,8 @@
           <label>पासवर्ड (Password)</label>
           <input type="password" id="newAdminPass" placeholder="password">
         </div>
-        <button class="btn-save" onclick="registerAdmin()" style="background: var(--text);">अ‍ॅडमिन जोडा (Create Admin)</button>
+        <button class="btn-save" onclick="registerAdmin()" style="background: var(--text);">अ‍ॅडमिन जोडा (Create
+          Admin)</button>
       </div>
     </div>
 
@@ -273,7 +280,8 @@
           </div>
           <div class="form-group">
             <label>वर्ग (Category)</label>
-            <select id="prodCategory" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+            <select id="prodCategory" required
+              style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
               <option value="FERTILIZER">खते (Fertilizer)</option>
               <option value="PESTICIDE">कीटकनाशके (Pesticide)</option>
               <option value="FUNGICIDE">बुरशीनाशके (Fungicide)</option>
@@ -370,23 +378,23 @@
     const authToken = localStorage.getItem('krushi_token');
 
     // Load content from server
-    window.onload = async function() {
+    window.onload = async function () {
       try {
         const res = await fetch('/api/content');
         if (res.ok) {
           const data = await res.json();
-          
-          if(data.heroTitle) document.getElementById('heroTitle').value = data.heroTitle;
-          if(data.heroSubtitle) document.getElementById('heroSubtitle').value = data.heroSubtitle;
-          if(data.aboutText) document.getElementById('aboutText').value = data.aboutText;
-          if(data.contactArea) document.getElementById('contactArea').value = data.contactArea;
-          if(data.contactMobile) document.getElementById('contactMobile').value = data.contactMobile;
-          if(data.contactEmail) document.getElementById('contactEmail').value = data.contactEmail;
+
+          if (data.heroTitle) document.getElementById('heroTitle').value = data.heroTitle;
+          if (data.heroSubtitle) document.getElementById('heroSubtitle').value = data.heroSubtitle;
+          if (data.aboutText) document.getElementById('aboutText').value = data.aboutText;
+          if (data.contactArea) document.getElementById('contactArea').value = data.contactArea;
+          if (data.contactMobile) document.getElementById('contactMobile').value = data.contactMobile;
+          if (data.contactEmail) document.getElementById('contactEmail').value = data.contactEmail;
         }
       } catch (error) {
         console.error("Failed to load content from server", error);
       }
-      
+
       loadProducts();
       loadBrands();
     };
@@ -394,7 +402,7 @@
     function showTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('active'));
-      
+
       document.getElementById(tabId).classList.add('active');
       event.target.classList.add('active');
     }
@@ -437,12 +445,12 @@
     }
 
     async function deleteProduct(id) {
-       if(!confirm("Are you sure?")) return;
-       const res = await fetch(`/api/products/${id}`, {
-         method: 'DELETE',
-         headers: { 'Authorization': `Bearer ${authToken}` }
-       });
-       if (res.ok) loadProducts();
+      if (!confirm("Are you sure?")) return;
+      const res = await fetch(`/api/products/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      });
+      if (res.ok) loadProducts();
     }
 
     async function loadBrands() {
@@ -481,18 +489,18 @@
     }
 
     async function deleteBrand(id) {
-       if(!confirm("Are you sure?")) return;
-       const res = await fetch(`/api/brands/${id}`, {
-         method: 'DELETE',
-         headers: { 'Authorization': `Bearer ${authToken}` }
-       });
-       if (res.ok) loadBrands();
+      if (!confirm("Are you sure?")) return;
+      const res = await fetch(`/api/brands/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      });
+      if (res.ok) loadBrands();
     }
 
     async function saveContent(section) {
       let payload = {};
 
-      if(section === 'hero') {
+      if (section === 'hero') {
         payload.heroTitle = document.getElementById('heroTitle').value;
         payload.heroSubtitle = document.getElementById('heroSubtitle').value;
       } else if (section === 'about') {
@@ -506,7 +514,7 @@
       try {
         const response = await fetch('/api/content', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${authToken}`
           },
@@ -535,7 +543,7 @@
       const newUser = document.getElementById('newAdminUser').value;
       const newPass = document.getElementById('newAdminPass').value;
 
-      if(!newUser || !newPass) {
+      if (!newUser || !newPass) {
         alert("Please fill both username and password.");
         return;
       }
@@ -543,7 +551,7 @@
       try {
         const response = await fetch('/api/auth/register', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${authToken}`
           },
@@ -551,7 +559,7 @@
         });
 
         const data = await response.json();
-        
+
         if (response.ok) {
           alert("New Admin Created Successfully!");
           document.getElementById('newAdminUser').value = '';
@@ -572,4 +580,5 @@
   </script>
 
 </body>
+
 </html>
