@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../database');
+const supabase = require('../database');
 const { verifyToken } = require('./auth');
 
 // Get all content
-router.get('/', (req, res) => {
-    db.all("SELECT * FROM site_content", [], (err, rows) => {
-        if (err) {
+router.get('/', async (req, res) => {
+    try {
+        const { data: rows, error } = await supabase
+            .from('site_content')
+            .select('*');
+
+        if (error) {
             return res.status(500).json({ error: 'Failed to fetch content.' });
         }
         
@@ -17,42 +21,38 @@ router.get('/', (req, res) => {
         });
 
         res.json(contentMap);
-    });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error fetching content.' });
+    }
 });
 
 // Update specific content (Protected Route)
-router.post('/', verifyToken, (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     const updates = req.body; // Expecting { key1: val1, key2: val2 }
 
     if (!updates || Object.keys(updates).length === 0) {
         return res.status(400).json({ error: 'No data provided for update.' });
     }
 
-    const keys = Object.keys(updates);
-    let completed = 0;
-    let hasError = false;
+    try {
+        // Transform { key: val } to [{ key, value }] for Supabase upsert
+        const upsertData = Object.entries(updates).map(([key, value]) => ({ key, value }));
 
-    db.serialize(() => {
-        db.run("BEGIN TRANSACTION");
-        keys.forEach(key => {
-            db.run("INSERT OR REPLACE INTO site_content (key, value) VALUES (?, ?)", [key, updates[key]], (err) => {
-                if (err) {
-                    hasError = true;
-                }
-                completed++;
-                if (completed === keys.length) {
-                    if (hasError) {
-                        db.run("ROLLBACK");
-                        res.status(500).json({ error: 'Failed to update content.' });
-                    } else {
-                        db.run("COMMIT");
-                        res.json({ message: 'Content updated successfully.' });
-                    }
-                }
-            });
-        });
-    });
+        const { error } = await supabase
+            .from('site_content')
+            .upsert(upsertData, { onConflict: 'key' });
+
+        if (error) {
+            console.error("Supabase content update error:", error);
+            return res.status(500).json({ error: 'Failed to update content.' });
+        }
+
+        res.json({ message: 'Content updated successfully.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error updating content.' });
+    }
 });
 
 module.exports = router;
+
 

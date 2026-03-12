@@ -2,20 +2,26 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const db = require('../database');
+const supabase = require('../database');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_krushikanchan_key_change_in_production';
 
 // Login Endpoint
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password required.' });
     }
 
-    db.get("SELECT * FROM admins WHERE username = ?", [username], async (err, admin) => {
-        if (err || !admin) {
+    try {
+        const { data: admin, error } = await supabase
+            .from('admins')
+            .select('*')
+            .eq('username', username)
+            .maybeSingle();
+
+        if (error || !admin) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
 
@@ -29,7 +35,9 @@ router.post('/login', (req, res) => {
         const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: '8h' });
 
         res.json({ message: 'Login successful', token });
-    });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error during login.' });
+    }
 });
 
 // Middleware to verify JWT Token
@@ -57,26 +65,36 @@ router.get('/verify', verifyToken, (req, res) => {
 });
 
 // Register New Admin Endpoint (Protected)
-router.post('/register', verifyToken, (req, res) => {
+router.post('/register', verifyToken, async (req, res) => {
     const { new_username, new_password } = req.body;
 
     if (!new_username || !new_password) {
         return res.status(400).json({ error: 'Username and password required.' });
     }
 
-    db.get("SELECT id FROM admins WHERE username = ?", [new_username], async (err, existingAdmin) => {
+    try {
+        const { data: existingAdmin } = await supabase
+            .from('admins')
+            .select('id')
+            .eq('username', new_username)
+            .maybeSingle();
+
         if (existingAdmin) {
              return res.status(400).json({ error: 'Username already exists.' });
         }
 
         const hash = await bcrypt.hash(new_password, 10);
-        db.run("INSERT INTO admins (username, password) VALUES (?, ?)", [new_username, hash], (err) => {
-            if (err) {
-                return res.status(500).json({ error: 'Failed to create user.' });
-            }
-            res.status(201).json({ message: 'New admin created successfully.' });
-        });
-    });
+        const { error } = await supabase
+            .from('admins')
+            .insert([{ username: new_username, password: hash }]);
+
+        if (error) {
+            return res.status(500).json({ error: 'Failed to create user.' });
+        }
+        res.status(201).json({ message: 'New admin created successfully.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error during registration.' });
+    }
 });
 
 module.exports = router;

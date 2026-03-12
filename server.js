@@ -45,6 +45,9 @@ app.get('/debug/health', async (req, res) => {
     }
 });
 
+
+
+
 // If an API route wasn't matched, send the index.html
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const db = require('../database');
+const supabase = require('../database');
 const { verifyToken } = require('./auth');
 
 // Configure Multer for image uploads
@@ -18,15 +18,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // GET all brands
-router.get('/', (req, res) => {
-    db.all("SELECT * FROM brands", [], (err, rows) => {
-        if (err) return res.status(500).json({ error: 'Server error fetching brands.' });
+router.get('/', async (req, res) => {
+    try {
+        const { data: rows, error } = await supabase
+            .from('brands')
+            .select('*');
+
+        if (error) return res.status(500).json({ error: error.message });
         res.json(rows);
-    });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error fetching brands.' });
+    }
 });
 
 // POST a new brand (Protected)
-router.post('/', verifyToken, upload.single('image'), (req, res) => {
+router.post('/', verifyToken, upload.single('image'), async (req, res) => {
     const { name, website_url } = req.body;
     if (!name) {
         return res.status(400).json({ error: 'Name is required.' });
@@ -37,21 +43,32 @@ router.post('/', verifyToken, upload.single('image'), (req, res) => {
         image_path = 'images/' + req.file.filename;
     }
 
-    db.run("INSERT INTO brands (name, image_path, website_url) VALUES (?, ?, ?)",
-        [name, image_path, website_url || ''],
-        function(err) {
-            if (err) return res.status(500).json({ error: 'Server error adding brand.' });
-            res.status(201).json({ message: 'Brand added successfully', id: this.lastID });
-        }
-    );
+    try {
+        const { data, error } = await supabase
+            .from('brands')
+            .insert([{ name, image_path, website_url: website_url || '' }])
+            .select();
+
+        if (error) return res.status(500).json({ error: error.message });
+        res.status(201).json({ message: 'Brand added successfully', id: data[0].id });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error adding brand.' });
+    }
 });
 
 // DELETE a brand (Protected)
-router.delete('/:id', verifyToken, (req, res) => {
-    db.run("DELETE FROM brands WHERE id = ?", [req.params.id], function(err) {
-        if (err) return res.status(500).json({ error: 'Server error deleting brand.' });
+router.delete('/:id', verifyToken, async (req, res) => {
+    try {
+        const { error } = await supabase
+            .from('brands')
+            .delete()
+            .eq('id', req.params.id);
+
+        if (error) return res.status(500).json({ error: error.message });
         res.json({ message: 'Brand deleted successfully' });
-    });
+    } catch (err) {
+        res.status(500).json({ error: 'Server error deleting brand.' });
+    }
 });
 
 module.exports = router;
