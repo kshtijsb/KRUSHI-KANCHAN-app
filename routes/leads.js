@@ -21,7 +21,9 @@ router.post('/', async (req, res) => {
         const { data, error } = await supabase
             .from('leads')
             .insert([{ 
-                name, phone, location, crop, 
+                name, phone, 
+                location: location || 'N/A', // Bypass NOT NULL constraint if schema not updated
+                crop: crop || 'General',      // Bypass NOT NULL if schema not updated
                 duration, area, 
                 lead_type, contact_person, email, message 
             }])
