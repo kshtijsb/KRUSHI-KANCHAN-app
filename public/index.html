@@ -959,10 +959,85 @@
       background-size: 20px;
       padding-right: 40px;
     }
+
+    /* Seed to Harvest Scroll Tracker */
+    .scroll-journey {
+      position: fixed;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: rgba(169, 199, 163, 0.2);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .scroll-stem {
+      width: 100%;
+      background: linear-gradient(to bottom, var(--green-dark), var(--accent));
+      height: 0%;
+      border-radius: 4px;
+      transition: height 0.1s ease-out;
+    }
+
+    .scroll-icon-wrapper {
+      position: absolute;
+      top: 0%;
+      width: 50px;
+      height: 50px;
+      margin-left: 2px;
+      transform: translate(-50%, -50%);
+      background: var(--cream);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: top 0.1s ease-out, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      color: var(--green-dark);
+    }
+
+    .scroll-icon-wrapper svg {
+      width: 28px;
+      height: 28px;
+      transition: opacity 0.3s ease, transform 0.4s ease;
+    }
+
+    .icon-spin {
+      animation: gentle-wobble 3s infinite ease-in-out;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes gentle-wobble {
+      0% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(-5deg); }
+    }
+
+    @media (max-width: 768px) {
+      .scroll-journey {
+        display: none; /* Hide on mobile to prevent obscuring content */
+      }
+    }
   </style>
 </head>
 
 <body>
+  <div class="scroll-journey" id="scrollJourney">
+    <div class="scroll-stem" id="scrollStem"></div>
+    <div class="scroll-icon-wrapper" id="scrollIconWrapper">
+      <div id="scrollIconContent" class="icon-spin">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22S7 16 7 11A5 5 0 0 1 17 11c0 5-5 11-5 11z"></path></svg>
+      </div>
+    </div>
+  </div>
 
   <header>
     <div class="nav">
@@ -1557,6 +1632,54 @@
         }
       } catch (error) {
         console.error("Failed to fetch dynamic content", error);
+      }
+    });
+
+    // 11. Seed to Harvest Scroll Tracker
+    const scrollJourney = document.getElementById('scrollJourney');
+    const scrollStem = document.getElementById('scrollStem');
+    const scrollIconWrapper = document.getElementById('scrollIconWrapper');
+    const scrollIconContent = document.getElementById('scrollIconContent');
+
+    const journeySVGs = {
+      seed: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22S7 16 7 11A5 5 0 0 1 17 11c0 5-5 11-5 11z"></path></svg>',
+      sprout: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8 0 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 .1-4.9 2z"></path></svg>',
+      plant: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>',
+      harvest: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 22v-4a2 2 0 1 0-4 0v4"/><path d="M18 10c0 4.4-3.6 8-8 8s-8-3.6-8-8c0-3.1 1.8-6 4.7-7.3A8 8 0 0 1 18 10z"/><circle cx="14" cy="7" r="1"/><circle cx="10" cy="12" r="1"/><circle cx="15" cy="13" r="1"/></svg>'
+    };
+
+    let currentJourneyState = 'seed';
+
+    window.addEventListener('scroll', () => {
+      if(!scrollStem || !scrollIconWrapper) return;
+      
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      const scrollPercent = Math.min(100, Math.max(0, (scrollTop / (docHeight - winHeight)) * 100));
+
+      scrollStem.style.height = scrollPercent + '%';
+      scrollIconWrapper.style.top = scrollPercent + '%';
+      
+      let newState = 'seed';
+      if (scrollPercent >= 75) {
+        newState = 'harvest';
+      } else if (scrollPercent >= 50) {
+        newState = 'plant';
+      } else if (scrollPercent >= 25) {
+        newState = 'sprout';
+      }
+
+      if (newState !== currentJourneyState) {
+        currentJourneyState = newState;
+        scrollIconContent.style.opacity = '0';
+        scrollIconContent.style.transform = 'scale(0.5)';
+        
+        setTimeout(() => {
+          scrollIconContent.innerHTML = journeySVGs[newState];
+          scrollIconContent.style.opacity = '1';
+          scrollIconContent.style.transform = 'scale(1)';
+        }, 300);
       }
     });
 
