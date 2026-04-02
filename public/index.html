@@ -1799,13 +1799,15 @@
             }
             body.style.setProperty('--dynamic-bg', bgStr);
 
-            // Parallax element update
+            // Parallax element update (fixed overlap by making it relative to viewport center)
             parallaxLayers.forEach(layer => {
               const rect = layer.getBoundingClientRect();
               // Only apply parallax if element is roughly on screen
               if(rect.top < winHeight + 300 && rect.bottom > -300) {
                  const speed = parseFloat(layer.getAttribute('data-speed')) || 0;
-                 const yPos = -(scrollTop * speed);
+                 // Calculate distance from center of viewport to center of element
+                 const centerOffset = (winHeight / 2) - (rect.top + (rect.height / 2));
+                 const yPos = centerOffset * speed;
                  layer.style.transform = `translateY(${yPos}px)`;
               }
             });
