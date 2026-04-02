@@ -28,7 +28,9 @@
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       color: var(--text);
-      background: linear-gradient(180deg, #f8f3ea 0%, #eef5e8 100%);
+      background-color: var(--dynamic-bg, #f8f3ea);
+      transition: background-color 0.8s ease;
+      position: relative; /* For particle overlay */
     }
 
     header {
@@ -1026,10 +1028,52 @@
         display: none; /* Hide on mobile to prevent obscuring content */
       }
     }
+
+    /* Ambient Particles & Parallax */
+    #particles-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(200, 230, 150, 0.5) 40%, transparent 80%);
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100px) scale(0.8);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.6;
+      }
+      80% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-200px) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .parallax-layer {
+      will-change: transform;
+      transition: transform 0.1s linear;
+    }
   </style>
 </head>
 
 <body>
+  <div id="particles-container"></div>
   <div class="scroll-journey" id="scrollJourney">
     <div class="scroll-stem" id="scrollStem"></div>
     <div class="scroll-icon-wrapper" id="scrollIconWrapper">
@@ -1682,6 +1726,98 @@
         }, 300);
       }
     });
+
+    // 12. Dynamic Scrollytelling: Sub-systems
+    const initDynamicScrollytelling = () => {
+      const body = document.body;
+      const particlesContainer = document.getElementById('particles-container');
+      
+      // Auto-tag elements for parallax
+      const parallaxCandidates = document.querySelectorAll('.card, .hero-content, .section-title');
+      parallaxCandidates.forEach(el => {
+        el.classList.add('parallax-layer');
+        const speed = el.classList.contains('card') ? (Math.random() * 0.1 + 0.05) : 0.05;
+        el.setAttribute('data-speed', speed);
+      });
+
+      const parallaxLayers = document.querySelectorAll('.parallax-layer');
+
+      // Spawn glowing ambient particles (pollen)
+      const maxParticles = 25;
+      const createParticle = () => {
+        if(particlesContainer.children.length > maxParticles) return;
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        const size = Math.random() * 15 + 5;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        const duration = Math.random() * 15 + 10;
+        particle.style.animation = `floatParticle ${duration}s infinite linear`;
+        particle.style.animationDelay = `-${Math.random() * 10}s`;
+        particlesContainer.appendChild(particle);
+      };
+      
+      for(let i=0; i<maxParticles; i++) createParticle();
+
+      // Scroll observer for parallax & bg color time-of-day
+      // Color interpolation: #f8f3ea (morning) -> #fdf0d5 (golden) -> #dfe6df (dusk)
+      const colors = {
+        morning: [248, 243, 234], // f8f3ea
+        golden: [253, 240, 213],  // fdf0d5
+        dusk: [223, 230, 223]     // dfe6df
+      };
+
+      const interpolateColor = (color1, color2, factor) => {
+        const r = Math.round(color1[0] + factor * (color2[0] - color1[0]));
+        const g = Math.round(color1[1] + factor * (color2[1] - color1[1]));
+        const b = Math.round(color1[2] + factor * (color2[2] - color1[2]));
+        return `rgb(${r}, ${g}, ${b})`;
+      };
+
+      // Set initial bg
+      body.style.setProperty('--dynamic-bg', `rgb(${colors.morning.join(',')})`);
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if(!ticking) {
+          window.requestAnimationFrame(() => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / Math.max(1, (docHeight - winHeight));
+
+            // Bg transition
+            let bgStr = '';
+            if (scrollPercent < 0.5) {
+              const factor = scrollPercent / 0.5;
+              bgStr = interpolateColor(colors.morning, colors.golden, Math.min(1, Math.max(0, factor)));
+            } else {
+              const factor = (scrollPercent - 0.5) / 0.5;
+              bgStr = interpolateColor(colors.golden, colors.dusk, Math.min(1, Math.max(0, factor)));
+            }
+            body.style.setProperty('--dynamic-bg', bgStr);
+
+            // Parallax element update
+            parallaxLayers.forEach(layer => {
+              const rect = layer.getBoundingClientRect();
+              // Only apply parallax if element is roughly on screen
+              if(rect.top < winHeight + 300 && rect.bottom > -300) {
+                 const speed = parseFloat(layer.getAttribute('data-speed')) || 0;
+                 const yPos = -(scrollTop * speed);
+                 layer.style.transform = `translateY(${yPos}px)`;
+              }
+            });
+            
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    };
+
+    window.addEventListener('DOMContentLoaded', initDynamicScrollytelling);
 
   </script>
 
