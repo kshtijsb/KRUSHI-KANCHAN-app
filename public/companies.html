@@ -7,13 +7,15 @@
   <title> कृषिकांचन | कृषी सेवा केंद्र</title>
   <style>
     :root {
-      --green: #059669;
-      --green-dark: #064e3b;
-      --green-soft: #d1fae5;
+      --green: #15803d; /* Dark Green */
+      --green-dark: #14532d; /* Very Dark Green */
+      --green-soft: #f0fdf4; /* Crisp Light Green */
       --beige: #f8fafc;
       --cream: #ffffff;
-      --text: #0f172a;
-      --accent: #10b981;
+      --text: #1e293b;
+      --accent: #eab308; /* Harvest Yellow */
+      --gradient-agri: linear-gradient(135deg, #14532d 0%, #15803d 100%);
+      --gradient-harvest: linear-gradient(135deg, #15803d 0%, #65a30d 100%);
       --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
       --radius: 12px;
     }
@@ -29,9 +31,7 @@
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       color: var(--text);
-      background: linear-gradient(120deg, #f8f3ea, #eef5e8, #f5ede3, #e7efe1);
-      background-size: 300% 300%;
-      animation: gradientBG 15s ease infinite;
+      background: var(--beige);
     }
 
     /* Pattern overlay for extra style */
@@ -63,7 +63,7 @@
       top: 0;
       z-index: 1000;
       backdrop-filter: blur(12px);
-      background: rgba(6, 78, 59, 0.92);
+      background: linear-gradient(135deg, rgba(20, 83, 45, 0.95), rgba(21, 128, 61, 0.95));
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
@@ -161,7 +161,7 @@
       padding: 40px 20px;
       color: white;
       background:
-        linear-gradient(rgba(6, 78, 59, 0.75), rgba(6, 78, 59, 0.85)),
+        linear-gradient(135deg, rgba(20, 83, 45, 0.8), rgba(21, 128, 61, 0.7)),
         url('images/Gemini Generated Image.png') center/cover no-repeat;
       position: relative;
       overflow: hidden;
@@ -241,13 +241,15 @@
     }
 
     .btn-primary {
-      background: var(--green);
+      background: var(--gradient-agri);
       color: white;
+      border: none;
     }
 
     .btn-primary:hover {
       transform: translateY(-3px) scale(1.03);
-      background: var(--accent);
+      background: var(--gradient-harvest);
+      box-shadow: 0 8px 20px rgba(21, 128, 61, 0.3);
     }
 
     .btn-secondary {
