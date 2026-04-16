@@ -6,17 +6,20 @@
     <title>कृषि कांचन | कृषी सेवा केंद्र</title>
     <style>
       :root {
-        --green: #15803d; /* Dark Green */
-        --green-dark: #14532d; /* Very Dark Green */
-        --green-soft: #f0fdf4; /* Crisp Light Green */
-        --beige: #f8fafc;
+        --green: #299764;
+        --green-dark: #1d1d1f;
+        --green-soft: #e8f5ee;
+        --beige: #f5f5f7;
         --cream: #ffffff;
-        --text: #1e293b;
-        --accent: #eab308; /* Harvest Yellow */
-        --gradient-agri: linear-gradient(135deg, #14532d 0%, #15803d 100%);
-        --gradient-harvest: linear-gradient(135deg, #15803d 0%, #65a30d 100%);
-        --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        --radius: 12px;
+        --text: #1d1d1f;
+        --secondary-text: #86868b;
+        --accent: #299764;
+        --gradient-agri: linear-gradient(135deg, #299764 0%, #30b175 100%);
+        --gradient-harvest: linear-gradient(135deg, #1d7249 0%, #299764 100%);
+        --shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+        --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.02);
+        --radius: 20px;
+        --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       * {
@@ -27,7 +30,7 @@
       }
 
       body {
-        font-family: "Segoe UI", Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Roboto", "Inter", sans-serif;
         color: var(--text);
         background-color: var(--dynamic-bg, var(--beige));
         transition: background-color 0.8s ease;
@@ -38,13 +41,10 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        backdrop-filter: blur(12px);
-        background: linear-gradient(
-          135deg,
-          rgba(20, 83, 45, 0.95),
-          rgba(21, 128, 61, 0.95)
-        );
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
       }
 
       .nav {
@@ -61,7 +61,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        color: #fff;
+        color: var(--text);
         text-decoration: none;
         transition: all 0.3s ease;
       }
@@ -82,80 +82,70 @@
         font-size: 14px;
         font-weight: 600;
         letter-spacing: 0.5px;
-        opacity: 0.9;
-        color: #d8efcb;
+        color: var(--secondary-text);
       }
 
       .header-logo {
-        height: 48px;
-        width: 48px;
-        border-radius: 50%;
+        height: 44px;
+        width: 44px;
+        border-radius: 10px;
         object-fit: cover;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        transition: transform 0.4s var(--apple-ease);
         flex-shrink: 0;
       }
 
       .logo:hover .header-logo {
-        transform: scale(1.08);
+        transform: scale(1.05);
       }
 
       .logo span {
-        color: #d8efcb;
+        color: var(--green);
       }
 
       nav a {
-        color: #fff;
+        color: var(--text);
         text-decoration: none;
         margin: 8px 12px;
-        font-weight: 600;
-        transition: 0.3s ease;
+        font-size: 14px;
+        font-weight: 500;
+        transition: opacity 0.3s ease, color 0.3s ease;
+        opacity: 0.8;
         position: relative;
       }
 
       nav a:hover {
-        color: #dff1d8;
-        text-shadow:
-          0 0 10px rgba(223, 241, 216, 0.8),
-          0 0 20px rgba(223, 241, 216, 0.4);
+        opacity: 1;
+        color: var(--text);
       }
 
       nav a::after {
         content: "";
         position: absolute;
-        left: 0;
+        left: 50%;
         bottom: -6px;
         width: 0;
         height: 2px;
-        background: #dff1d8;
-        transition: 0.3s ease;
+        background: var(--text);
+        transition: width 0.3s var(--apple-ease), left 0.3s var(--apple-ease);
       }
 
       nav a:hover::after {
         width: 100%;
-        box-shadow:
-          0 0 10px rgba(223, 241, 216, 0.9),
-          0 0 20px rgba(223, 241, 216, 0.5);
+        left: 0;
       }
 
       .hero {
         max-width: none !important;
         width: 100%;
         margin: 0;
-        min-height: 92vh;
+        min-height: 85vh;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 40px 20px;
-        color: white;
-        background:
-          linear-gradient(
-            135deg,
-            rgba(20, 83, 45, 0.8),
-            rgba(21, 128, 61, 0.7)
-          ),
-          url("images/Gemini Generated Image.png") center/cover no-repeat;
+        padding: 60px 20px;
+        background: var(--beige);
         position: relative;
         overflow: hidden;
       }
@@ -199,23 +189,29 @@
         max-width: 900px;
         position: relative;
         z-index: 2;
-        animation: fadeUp 1.1s ease;
+        animation: fadeUpScale 1.4s var(--apple-ease) forwards;
       }
 
       .hero h1 {
-        font-size: 52px;
-        margin-bottom: 16px;
-        line-height: 1.2;
+        font-size: 64px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+        line-height: 1.05;
+        color: var(--text);
       }
 
       .hero p {
-        font-size: 21px;
+        font-size: 22px;
         max-width: 760px;
         margin: auto;
+        color: var(--secondary-text);
+        font-weight: 400;
+        line-height: 1.4;
       }
 
       .btn-group {
-        margin-top: 28px;
+        margin-top: 36px;
         display: flex;
         gap: 16px;
         justify-content: center;
@@ -224,78 +220,94 @@
 
       .btn {
         display: inline-block;
-        padding: 14px 26px;
+        padding: 14px 28px;
         border-radius: 999px;
         text-decoration: none;
-        font-weight: 700;
-        transition: 0.3s ease;
-        box-shadow: var(--shadow);
+        font-weight: 600;
+        font-size: 17px;
+        transition: transform 0.3s var(--apple-ease), background 0.3s ease, box-shadow 0.3s ease;
       }
 
       .btn-primary {
-        background: var(--gradient-agri);
+        background: var(--text);
         color: white;
         border: none;
       }
 
       .btn-primary:hover {
-        transform: translateY(-3px) scale(1.03);
-        background: var(--gradient-harvest);
-        box-shadow: 0 8px 20px rgba(21, 128, 61, 0.3);
+        transform: scale(1.02);
+        background: #333336;
       }
 
       .btn-secondary {
-        background: rgba(255, 255, 255, 0.15);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(0, 0, 0, 0.04);
+        color: var(--text);
+        border: none;
       }
 
       .btn-secondary:hover {
-        transform: translateY(-3px);
-        background: rgba(255, 255, 255, 0.22);
+        transform: scale(1.02);
+        background: rgba(0, 0, 0, 0.08);
       }
 
       section {
         max-width: 1200px;
         margin: auto;
-        padding: 80px 22px;
-        animation: fadeUp 0.9s ease;
+        padding: 100px 22px;
       }
 
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(28px);
-        }
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        transition: opacity 1.2s var(--apple-ease), transform 1.2s var(--apple-ease);
+      }
 
-        to {
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      @keyframes fadeUpScale {
+        0% {
+          opacity: 0;
+          transform: translateY(30px) scale(0.98);
+        }
+        100% {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
         }
       }
 
       .section-title {
         text-align: center;
-        font-size: 36px;
-        color: var(--green-dark);
-        margin-bottom: 16px;
+        font-size: 44px;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        color: var(--text);
+        margin-bottom: 12px;
       }
 
       .section-sub {
         text-align: center;
         max-width: 800px;
-        margin: 0 auto 36px;
-        font-size: 18px;
+        margin: 0 auto 48px;
+        font-size: 20px;
+        color: var(--secondary-text);
+        font-weight: 400;
       }
 
       .about-box,
       .contact-box {
-        background: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        padding: 34px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        padding: 44px;
         border-radius: var(--radius);
         box-shadow: var(--shadow);
         text-align: center;
+        font-size: 18px;
+        line-height: 1.5;
       }
 
       .grid {
@@ -306,13 +318,14 @@
       }
 
       .card {
-        background: var(--cream);
-        padding: 26px 22px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        padding: 30px 26px;
         border-radius: var(--radius);
         box-shadow: var(--shadow);
-        transition:
-          transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-          box-shadow 0.4s ease;
+        transition: transform 0.5s var(--apple-ease), box-shadow 0.5s var(--apple-ease);
         position: relative;
         overflow: hidden;
         transform-style: preserve-3d;
@@ -320,9 +333,8 @@
       }
 
       .card:hover {
-        transform: translateY(-10px) rotateX(4deg) rotateY(-4deg)
-          scale3d(1.02, 1.02, 1.02);
-        box-shadow: -8px 16px 35px rgba(0, 0, 0, 0.15);
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
       }
 
       .card::before {
@@ -376,24 +388,24 @@
       .brand-item {
         flex: 0 0 180px;
         margin: 0 10px;
-        background: white;
-        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        border-radius: 24px;
         height: 150px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--shadow);
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex-direction: column;
         padding: 24px 16px 16px;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: transform 0.5s var(--apple-ease), box-shadow 0.5s var(--apple-ease);
         cursor: pointer;
-        transform-style: preserve-3d;
-        perspective: 1000px;
       }
 
       .brand-item:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
       }
 
       .brand-item img {
@@ -427,38 +439,43 @@
       .form-container {
         max-width: 600px;
         margin: 0 auto;
-        background: white;
-        padding: 30px;
-        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(40px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        padding: 40px;
+        border-radius: 24px;
         box-shadow: var(--shadow);
       }
 
       .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 24px;
         text-align: left;
       }
 
       .form-group label {
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         font-weight: 600;
-        color: var(--green-dark);
+        font-size: 15px;
+        color: var(--text);
       }
 
       .form-group input {
         width: 100%;
-        padding: 12px 16px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
+        padding: 14px 18px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 14px;
         font-size: 16px;
         font-family: inherit;
-        transition: border-color 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s var(--apple-ease);
       }
 
       .form-group input:focus {
         outline: none;
-        border-color: var(--green);
-        box-shadow: 0 0 0 3px rgba(169, 199, 163, 0.3);
+        border-color: var(--text);
+        box-shadow: 0 0 0 4px rgba(29, 29, 31, 0.1);
+        background: #fff;
       }
 
       .btn-submit {
@@ -477,21 +494,7 @@
         margin-top: 40px;
       }
 
-      /* --- Interactive Features CSS --- */
-
-      /* Scroll Reveal */
-      .reveal {
-        opacity: 0;
-        transform: translateY(40px);
-        transition:
-          opacity 0.8s ease-out,
-          transform 0.8s ease-out;
-      }
-
-      .reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      /* Interactive Features CSS */
 
       /* Toast Notification */
       .toast-container {
@@ -697,9 +700,11 @@
 
       /* Weather Widget Styles */
       .weather-card {
-        background: white;
-        padding: 30px;
-        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        padding: 40px;
+        border-radius: 24px;
         box-shadow: var(--shadow);
         text-align: center;
         margin-bottom: 30px;
@@ -707,7 +712,7 @@
         flex-direction: column;
         align-items: center;
         gap: 15px;
-        border: 1px solid var(--green-soft);
+        border: 1px solid rgba(255, 255, 255, 0.8);
       }
       .weather-info {
         display: flex;
@@ -743,51 +748,56 @@
 
       .weather-search input {
         flex: 1;
-        padding: 10px 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        padding: 14px 18px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 14px;
         font-size: 16px;
+        background: rgba(255, 255, 255, 0.8);
         outline: none;
-        transition: border-color 0.3s;
+        transition: all 0.3s var(--apple-ease);
       }
 
       .weather-search input:focus {
-        border-color: var(--green);
+        border-color: var(--text);
+        box-shadow: 0 0 0 4px rgba(29, 29, 31, 0.1);
+        background: #fff;
       }
 
       .weather-search button {
-        background: var(--green);
+        background: var(--text);
         color: white;
         border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
+        padding: 14px 24px;
+        border-radius: 14px;
         cursor: pointer;
         font-weight: 600;
-        transition: background 0.3s;
+        transition: transform 0.3s var(--apple-ease), background 0.3s;
       }
 
       .weather-search button:hover {
-        background: var(--green-dark);
+        transform: scale(1.03);
+        background: #333336;
       }
 
       /* Expert Advice Button */
       .expert-whatsapp {
-        background: #25d366;
+        background: #141414;
         color: white;
-        padding: 15px 30px;
+        padding: 16px 32px;
         border-radius: 999px;
         text-decoration: none;
-        font-weight: 800;
+        font-weight: 600;
+        font-size: 17px;
         display: inline-flex;
         align-items: center;
         gap: 12px;
-        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
-        transition: all 0.3s;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        transition: transform 0.4s var(--apple-ease), background 0.3s;
         margin-top: 20px;
       }
       .expert-whatsapp:hover {
-        transform: translateY(-3px) scale(1.05);
-        background: #128c7e;
+        transform: scale(1.02);
+        background: #25d366;
       }
 
       .expert-whatsapp svg {
@@ -901,27 +911,37 @@
       .filter-btn-group {
         display: flex;
         justify-content: center;
-        gap: 12px;
-        margin-bottom: 30px;
+        gap: 8px;
+        margin-bottom: 40px;
         flex-wrap: wrap;
+        background: rgba(0, 0, 0, 0.04);
+        padding: 6px;
+        border-radius: 100px;
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .filter-btn {
-        background: white;
-        color: var(--green-dark);
-        border: 1px solid var(--green);
-        padding: 8px 20px;
+        background: transparent;
+        color: var(--secondary-text);
+        border: none;
+        padding: 10px 24px;
         border-radius: 999px;
         cursor: pointer;
         font-weight: 600;
-        transition: all 0.3s;
+        font-size: 15px;
+        transition: all 0.3s var(--apple-ease);
       }
 
-      .filter-btn:hover,
+      .filter-btn:hover {
+        color: var(--text);
+      }
+
       .filter-btn.active {
-        background: var(--green);
-        color: white;
-        box-shadow: 0 4px 10px rgba(169, 199, 163, 0.4);
+        background: white;
+        color: var(--text);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }
 
       .product-card-wrap {
@@ -936,36 +956,42 @@
       .map-tabs {
         display: flex;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
         margin-top: 25px;
-        margin-bottom: 15px;
+        margin-bottom: 25px;
+        background: rgba(0, 0, 0, 0.04);
+        padding: 6px;
+        border-radius: 100px;
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .map-tab-btn {
-        background: white;
-        color: var(--green-dark);
-        border: 1px solid var(--green);
-        padding: 8px 20px;
+        background: transparent;
+        color: var(--secondary-text);
+        border: none;
+        padding: 10px 24px;
         border-radius: 999px;
         cursor: pointer;
         font-weight: 600;
-        transition: all 0.3s;
+        font-size: 15px;
+        transition: all 0.3s var(--apple-ease);
       }
 
-      .map-tab-btn:hover,
+      .map-tab-btn:hover {
+        color: var(--text);
+      }
+
       .map-tab-btn.active {
-        background: var(--green);
-        color: white;
-        box-shadow:
-          0 0 15px rgba(169, 199, 163, 0.8),
-          0 0 25px rgba(169, 199, 163, 0.5);
-        transform: translateY(-2px);
+        background: white;
+        color: var(--text);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       }
 
       .map-container {
         margin-top: 10px;
-
-        border-radius: 12px;
+        border-radius: 24px;
         overflow: hidden;
         box-shadow: var(--shadow);
       }
