@@ -1,1487 +1,1654 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="mr">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> कृषि कांचन | कृषी सेवा केंद्र</title>
-  <style>
-    :root {
-      --green: #15803d; /* Dark Green */
-      --green-dark: #14532d; /* Very Dark Green */
-      --green-soft: #f0fdf4; /* Crisp Light Green */
-      --beige: #f8fafc;
-      --cream: #ffffff;
-      --text: #1e293b;
-      --accent: #eab308; /* Harvest Yellow */
-      --gradient-agri: linear-gradient(135deg, #14532d 0%, #15803d 100%);
-      --gradient-harvest: linear-gradient(135deg, #15803d 0%, #65a30d 100%);
-      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-      --radius: 12px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth
-    }
-
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: var(--text);
-      background-color: var(--dynamic-bg, var(--beige));
-      transition: background-color 0.8s ease;
-      position: relative; /* For particle overlay */
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(12px);
-      background: linear-gradient(135deg, rgba(20, 83, 45, 0.95), rgba(21, 128, 61, 0.95));
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-
-    .nav {
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 24px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .mr-text {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .en-text {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      opacity: 0.9;
-      color: #d8efcb;
-    }
-
-    .header-logo {
-      height: 48px;
-      width: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease-in-out;
-      flex-shrink: 0;
-    }
-
-    .logo:hover .header-logo {
-      transform: scale(1.08);
-    }
-
-    .logo span {
-      color: #d8efcb;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 8px 12px;
-      font-weight: 600;
-      transition: 0.3s ease;
-      position: relative;
-    }
-
-    nav a:hover {
-      color: #dff1d8;
-      text-shadow: 0 0 10px rgba(223, 241, 216, 0.8), 0 0 20px rgba(223, 241, 216, 0.4);
-    }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 0;
-      height: 2px;
-      background: #dff1d8;
-      transition: 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-      box-shadow: 0 0 10px rgba(223, 241, 216, 0.9), 0 0 20px rgba(223, 241, 216, 0.5);
-    }
-
-    .hero {
-      max-width: none !important;
-      width: 100%;
-      margin: 0;
-      min-height: 92vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-      color: white;
-      background:
-        linear-gradient(135deg, rgba(20, 83, 45, 0.8), rgba(21, 128, 61, 0.7)),
-        url('images/Gemini Generated Image.png') center/cover no-repeat;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
-      top: -120px;
-      left: -120px;
-      animation: float 7s ease-in-out infinite;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 350px;
-      height: 350px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 50%;
-      bottom: -100px;
-      right: -80px;
-      animation: float 9s ease-in-out infinite;
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0)
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>कृषि कांचन | कृषी सेवा केंद्र</title>
+    <style>
+      :root {
+        --green: #15803d; /* Dark Green */
+        --green-dark: #14532d; /* Very Dark Green */
+        --green-soft: #f0fdf4; /* Crisp Light Green */
+        --beige: #f8fafc;
+        --cream: #ffffff;
+        --text: #1e293b;
+        --accent: #eab308; /* Harvest Yellow */
+        --gradient-agri: linear-gradient(135deg, #14532d 0%, #15803d 100%);
+        --gradient-harvest: linear-gradient(135deg, #15803d 0%, #65a30d 100%);
+        --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        --radius: 12px;
       }
 
-      50% {
-        transform: translateY(20px)
-      }
-    }
-
-    .hero-content {
-      max-width: 900px;
-      position: relative;
-      z-index: 2;
-      animation: fadeUp 1.1s ease;
-    }
-
-    .hero h1 {
-      font-size: 52px;
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-
-    .hero p {
-      font-size: 21px;
-      max-width: 760px;
-      margin: auto;
-    }
-
-    .btn-group {
-      margin-top: 28px;
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 26px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: 0.3s ease;
-      box-shadow: var(--shadow);
-    }
-
-    .btn-primary {
-      background: var(--gradient-agri);
-      color: white;
-      border: none;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px) scale(1.03);
-      background: var(--gradient-harvest);
-      box-shadow: 0 8px 20px rgba(21, 128, 61, 0.3);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-secondary:hover {
-      transform: translateY(-3px);
-      background: rgba(255, 255, 255, 0.22);
-    }
-
-    section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 80px 22px;
-      animation: fadeUp 0.9s ease;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(28px)
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
       }
 
-      to {
-        opacity: 1;
-        transform: translateY(0)
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: var(--text);
+        background-color: var(--dynamic-bg, var(--beige));
+        transition: background-color 0.8s ease;
+        position: relative; /* For particle overlay */
       }
-    }
 
-    .section-title {
-      text-align: center;
-      font-size: 36px;
-      color: var(--green-dark);
-      margin-bottom: 16px;
-    }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(12px);
+        background: linear-gradient(
+          135deg,
+          rgba(20, 83, 45, 0.95),
+          rgba(21, 128, 61, 0.95)
+        );
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      }
 
-    .section-sub {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 36px;
-      font-size: 18px;
-    }
-
-    .about-box,
-    .contact-box {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      padding: 34px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 22px;
-      margin-top: 24px;
-    }
-
-    .card {
-      background: var(--cream);
-      padding: 26px 22px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-
-    .card:hover {
-      transform: translateY(-10px) rotateX(4deg) rotateY(-4deg) scale3d(1.02, 1.02, 1.02);
-      box-shadow: -8px 16px 35px rgba(0, 0, 0, 0.15);
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(169, 199, 163, 0.20), transparent);
-      opacity: 0;
-      transition: 0.35s ease;
-    }
-
-
-
-    .card:hover::before {
-      opacity: 1
-    }
-
-    .card h4 {
-      color: var(--green-dark);
-      margin-bottom: 10px;
-      font-size: 22px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .card p {
-      position: relative;
-      z-index: 2;
-    }
-
-    .product-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      background: #e7efe1;
-      transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
-        border-radius 0.5s ease;
-      display: block;
-    }
-
-    .card:hover .product-image {
-      transform: scale(1.06);
-      border-radius: 16px;
-    }
-
-
-
-    .brand-item {
-      flex: 0 0 180px;
-      margin: 0 10px;
-      background: white;
-      border-radius: 16px;
-      height: 150px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-direction: column;
-      padding: 24px 16px 16px;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      cursor: pointer;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-
-    .brand-item:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    .brand-item img {
-      width: auto;
-      max-width: 100%;
-      height: 65px;
-      object-fit: contain;
-      margin-bottom: 10px;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .brand-item:hover img {
-      transform: scale(1.15) translateY(-2px);
-    }
-
-    .brand-item span {
-      font-weight: 600;
-      color: var(--green-dark);
-      transition: color 0.3s ease;
-    }
-
-    .brand-item:hover span {
-      color: var(--accent);
-    }
-
-    .contact-box p {
-      margin: 10px 0;
-      font-size: 18px;
-    }
-
-    .form-container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 30px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--green-dark);
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-      font-family: inherit;
-      transition: border-color 0.3s ease;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(169, 199, 163, 0.3);
-    }
-
-    .btn-submit {
-      width: 100%;
-      border: none;
-      cursor: pointer;
-      font-size: 18px;
-      margin-top: 10px;
-    }
-
-    footer {
-      background: var(--green-dark);
-      color: white;
-      text-align: center;
-      padding: 22px;
-      margin-top: 40px;
-    }
-
-    /* --- Interactive Features CSS --- */
-
-    /* Scroll Reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Toast Notification */
-    .toast-container {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .toast {
-      background: #46624b;
-      color: white;
-      padding: 16px 24px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      transform: translateX(120%);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .toast.show {
-      transform: translateX(0);
-    }
-
-    /* Back to Top Button */
-    .back-to-top {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      width: 50px;
-      height: 50px;
-      background: var(--green);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      text-decoration: none;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      cursor: pointer;
-    }
-
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .back-to-top:hover {
-      background: var(--accent);
-      transform: translateY(-5px);
-    }
-
-    /* Lightbox */
-    .lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .lightbox.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90vh;
-      border-radius: 16px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      transform: scale(0.8);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .lightbox.active img {
-      transform: scale(1);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 30px;
-      right: 40px;
-      color: white;
-      font-size: 40px;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .lightbox-close:hover {
-      color: var(--green);
-    }
-
-    /* Accordion FAQ */
-    .faq-item {
-      background: white;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-      overflow: hidden;
-    }
-
-    .faq-question {
-      padding: 20px 24px;
-      font-weight: 600;
-      font-size: 18px;
-      color: var(--green-dark);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-      background: white;
-      transition: background 0.3s;
-    }
-
-    .faq-question:hover {
-      background: #fdfdfd;
-    }
-
-    .faq-answer {
-      max-height: 0;
-      padding: 0 24px;
-      background: var(--cream);
-      overflow: hidden;
-      transition: max-height 0.4s ease-out, padding 0.4s ease;
-    }
-
-    .faq-item.active .faq-answer {
-      max-height: 200px;
-      padding: 0 24px 20px;
-    }
-
-    .faq-item.active .faq-question {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .faq-icon {
-      transition: transform 0.3s ease;
-    }
-
-    .faq-item.active .faq-icon {
-      transform: rotate(45deg);
-    }
-
-    @media (max-width:768px) {
       .nav {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 10px;
-      }
-
-      .hero h1 {
-        font-size: 34px
-      }
-
-      .hero p {
-        font-size: 18px
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        flex-wrap: wrap;
       }
 
       .logo {
-        font-size: 24px;
-        justify-content: center;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.3s ease;
       }
 
-      nav {
-        text-align: center;
+      .logo-text {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
+        flex-direction: column;
+        line-height: 1.1;
+      }
+
+      .mr-text {
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 1px;
+      }
+
+      .en-text {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        opacity: 0.9;
+        color: #d8efcb;
+      }
+
+      .header-logo {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out;
+        flex-shrink: 0;
+      }
+
+      .logo:hover .header-logo {
+        transform: scale(1.08);
+      }
+
+      .logo span {
+        color: #d8efcb;
       }
 
       nav a {
-        margin: 5px 8px;
-        font-size: 14px;
-      }
-    }
-
-    /* Weather Widget Styles */
-    .weather-card {
-      background: white;
-      padding: 30px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      text-align: center;
-      margin-bottom: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      border: 1px solid var(--green-soft);
-    }
-    .weather-info {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .temp {
-      font-size: 48px;
-      font-weight: 800;
-      color: var(--green-dark);
-    }
-    .weather-desc {
-      font-size: 20px;
-      font-weight: 600;
-      text-transform: capitalize;
-    }
-    .weather-icon img {
-      width: 80px;
-    }
-    .weather-meta {
-      display: flex;
-      gap: 20px;
-      color: #666;
-    }
-
-    .weather-search {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .weather-search input {
-      flex: 1;
-      padding: 10px 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-
-    .weather-search input:focus {
-      border-color: var(--green);
-    }
-
-    .weather-search button {
-      background: var(--green);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-
-    .weather-search button:hover {
-      background: var(--green-dark);
-    }
-
-    /* Expert Advice Button */
-    .expert-whatsapp {
-      background: #25D366;
-      color: white;
-      padding: 15px 30px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
-      transition: all 0.3s;
-      margin-top: 20px;
-    }
-    .expert-whatsapp:hover {
-      transform: translateY(-3px) scale(1.05);
-      background: #128C7E;
-    }
-    
-    .expert-whatsapp svg {
-      width: 24px;
-      height: 24px;
-      fill: white;
-    }
-
-
-    /* New Feature CSS */
-    .floating-whatsapp {
-      position: fixed;
-      bottom: 90px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
-      background: #25D366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-      z-index: 1000;
-      animation: pulse-wa 2s infinite;
-      transition: transform 0.3s;
-    }
-
-    .floating-whatsapp svg {
-      width: 35px;
-      height: 35px;
-      fill: white;
-    }
-
-    .floating-whatsapp:hover {
-      transform: scale(1.1);
-    }
-
-    @keyframes pulse-wa {
-      0% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+        color: #fff;
+        text-decoration: none;
+        margin: 8px 12px;
+        font-weight: 600;
+        transition: 0.3s ease;
+        position: relative;
       }
 
-      70% {
-        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+      nav a:hover {
+        color: #dff1d8;
+        text-shadow:
+          0 0 10px rgba(223, 241, 216, 0.8),
+          0 0 20px rgba(223, 241, 216, 0.4);
       }
 
-      100% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-      }
-    }
-
-    .brands-marquee-wrapper {
-      width: 100%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      position: relative;
-      padding: 20px 0;
-      perspective: 1500px;
-    }
-
-    .brands-marquee-wrapper::before,
-    .brands-marquee-wrapper::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      width: 120px;
-      height: 100%;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .brands-marquee-wrapper::before {
-      left: 0;
-      background: linear-gradient(to right, var(--dynamic-bg, var(--beige)), transparent);
-    }
-
-    .brands-marquee-wrapper::after {
-      right: 0;
-      background: linear-gradient(to left, var(--dynamic-bg, var(--beige)), transparent);
-    }
-
-    .brands-marquee {
-      display: flex;
-      width: max-content;
-      animation: marquee 50s linear infinite;
-      transform-style: preserve-3d;
-    }
-
-    .brands-marquee:hover {
-      animation-play-state: paused;
-    }
-
-    @keyframes marquee {
-      0% {
-        transform: translateZ(0) translateX(0);
+      nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 0;
+        height: 2px;
+        background: #dff1d8;
+        transition: 0.3s ease;
       }
 
-      100% {
-        transform: translateZ(0) translateX(-10%);
+      nav a:hover::after {
+        width: 100%;
+        box-shadow:
+          0 0 10px rgba(223, 241, 216, 0.9),
+          0 0 20px rgba(223, 241, 216, 0.5);
       }
-    }
 
-    .filter-btn-group {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
+      .hero {
+        max-width: none !important;
+        width: 100%;
+        margin: 0;
+        min-height: 92vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 20px;
+        color: white;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(20, 83, 45, 0.8),
+            rgba(21, 128, 61, 0.7)
+          ),
+          url("images/Gemini Generated Image.png") center/cover no-repeat;
+        position: relative;
+        overflow: hidden;
+      }
 
-    .filter-btn {
-      background: white;
-      color: var(--green-dark);
-      border: 1px solid var(--green);
-      padding: 8px 20px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        top: -120px;
+        left: -120px;
+        animation: float 7s ease-in-out infinite;
+      }
 
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--green);
-      color: white;
-      box-shadow: 0 4px 10px rgba(169, 199, 163, 0.4);
-    }
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 50%;
+        bottom: -100px;
+        right: -80px;
+        animation: float 9s ease-in-out infinite;
+      }
 
-    .product-card-wrap {
-      transition: all 0.4s ease;
-      transform-origin: center top;
-    }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
 
-    .product-card-wrap.hide {
-      display: none;
-    }
+        50% {
+          transform: translateY(20px);
+        }
+      }
 
+      .hero-content {
+        max-width: 900px;
+        position: relative;
+        z-index: 2;
+        animation: fadeUp 1.1s ease;
+      }
 
-    .map-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 25px;
-      margin-bottom: 15px;
-    }
+      .hero h1 {
+        font-size: 52px;
+        margin-bottom: 16px;
+        line-height: 1.2;
+      }
 
-    .map-tab-btn {
-      background: white;
-      color: var(--green-dark);
-      border: 1px solid var(--green);
-      padding: 8px 20px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
+      .hero p {
+        font-size: 21px;
+        max-width: 760px;
+        margin: auto;
+      }
 
-    .map-tab-btn:hover,
-    .map-tab-btn.active {
-      background: var(--green);
-      color: white;
-      box-shadow: 0 0 15px rgba(169, 199, 163, 0.8), 0 0 25px rgba(169, 199, 163, 0.5);
-      transform: translateY(-2px);
-    }
+      .btn-group {
+        margin-top: 28px;
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
 
-    .map-container {
-      margin-top: 10px;
+      .btn {
+        display: inline-block;
+        padding: 14px 26px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s ease;
+        box-shadow: var(--shadow);
+      }
 
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
+      .btn-primary {
+        background: var(--gradient-agri);
+        color: white;
+        border: none;
+      }
 
-    .map-container iframe {
-      width: 100%;
-      height: 350px;
-      border: 0;
-      display: block;
-    }
+      .btn-primary:hover {
+        transform: translateY(-3px) scale(1.03);
+        background: var(--gradient-harvest);
+        box-shadow: 0 8px 20px rgba(21, 128, 61, 0.3);
+      }
 
-    .form-group input.valid-input {
-      border-color: #4CAF50;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 20px;
-      padding-right: 40px;
-    }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
 
-    .form-group input.invalid-input {
-      border-color: #f44336;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f44336'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 20px;
-      padding-right: 40px;
-    }
+      .btn-secondary:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.22);
+      }
 
-    /* Seed to Harvest Scroll Tracker */
-    .scroll-journey {
-      position: fixed;
-      left: 24px;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: rgba(169, 199, 163, 0.2);
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      pointer-events: none;
-    }
+      section {
+        max-width: 1200px;
+        margin: auto;
+        padding: 80px 22px;
+        animation: fadeUp 0.9s ease;
+      }
 
-    .scroll-stem {
-      width: 100%;
-      background: linear-gradient(to bottom, var(--green-dark), var(--accent));
-      height: 0%;
-      border-radius: 4px;
-      transition: height 0.1s ease-out;
-    }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
 
-    .scroll-icon-wrapper {
-      position: absolute;
-      top: 0%;
-      width: 50px;
-      height: 50px;
-      margin-left: 2px;
-      transform: translate(-50%, -50%);
-      background: var(--cream);
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: top 0.1s ease-out, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      color: var(--green-dark);
-    }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    .scroll-icon-wrapper svg {
-      width: 28px;
-      height: 28px;
-      transition: opacity 0.3s ease, transform 0.4s ease;
-    }
+      .section-title {
+        text-align: center;
+        font-size: 36px;
+        color: var(--green-dark);
+        margin-bottom: 16px;
+      }
 
-    .icon-spin {
-      animation: gentle-wobble 3s infinite ease-in-out;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+      .section-sub {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 36px;
+        font-size: 18px;
+      }
 
-    @keyframes gentle-wobble {
-      0% { transform: rotate(-5deg); }
-      50% { transform: rotate(5deg); }
-      100% { transform: rotate(-5deg); }
-    }
+      .about-box,
+      .contact-box {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 34px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
 
-    @media (max-width: 768px) {
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 22px;
+        margin-top: 24px;
+      }
+
+      .card {
+        background: var(--cream);
+        padding: 26px 22px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          box-shadow 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+
+      .card:hover {
+        transform: translateY(-10px) rotateX(4deg) rotateY(-4deg)
+          scale3d(1.02, 1.02, 1.02);
+        box-shadow: -8px 16px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(169, 199, 163, 0.2),
+          transparent
+        );
+        opacity: 0;
+        transition: 0.35s ease;
+      }
+
+      .card:hover::before {
+        opacity: 1;
+      }
+
+      .card h4 {
+        color: var(--green-dark);
+        margin-bottom: 10px;
+        font-size: 22px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .card p {
+        position: relative;
+        z-index: 2;
+      }
+
+      .product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        background: #e7efe1;
+        transition:
+          transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+          border-radius 0.5s ease;
+        display: block;
+      }
+
+      .card:hover .product-image {
+        transform: scale(1.06);
+        border-radius: 16px;
+      }
+
+      .brand-item {
+        flex: 0 0 180px;
+        margin: 0 10px;
+        background: white;
+        border-radius: 16px;
+        height: 150px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: 24px 16px 16px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+
+      .brand-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      .brand-item img {
+        width: auto;
+        max-width: 100%;
+        height: 65px;
+        object-fit: contain;
+        margin-bottom: 10px;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .brand-item:hover img {
+        transform: scale(1.15) translateY(-2px);
+      }
+
+      .brand-item span {
+        font-weight: 600;
+        color: var(--green-dark);
+        transition: color 0.3s ease;
+      }
+
+      .brand-item:hover span {
+        color: var(--accent);
+      }
+
+      .contact-box p {
+        margin: 10px 0;
+        font-size: 18px;
+      }
+
+      .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--green-dark);
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: inherit;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--green);
+        box-shadow: 0 0 0 3px rgba(169, 199, 163, 0.3);
+      }
+
+      .btn-submit {
+        width: 100%;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        margin-top: 10px;
+      }
+
+      footer {
+        background: var(--green-dark);
+        color: white;
+        text-align: center;
+        padding: 22px;
+        margin-top: 40px;
+      }
+
+      /* --- Interactive Features CSS --- */
+
+      /* Scroll Reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.8s ease-out,
+          transform 0.8s ease-out;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Toast Notification */
+      .toast-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .toast {
+        background: #46624b;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateX(120%);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .toast.show {
+        transform: translateX(0);
+      }
+
+      /* Back to Top Button */
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--green);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        cursor: pointer;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .back-to-top:hover {
+        background: var(--accent);
+        transform: translateY(-5px);
+      }
+
+      /* Lightbox */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .lightbox.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .lightbox img {
+        max-width: 90%;
+        max-height: 90vh;
+        border-radius: 16px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        transform: scale(0.8);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .lightbox.active img {
+        transform: scale(1);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .lightbox-close:hover {
+        color: var(--green);
+      }
+
+      /* Accordion FAQ */
+      .faq-item {
+        background: white;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+      }
+
+      .faq-question {
+        padding: 20px 24px;
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--green-dark);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        background: white;
+        transition: background 0.3s;
+      }
+
+      .faq-question:hover {
+        background: #fdfdfd;
+      }
+
+      .faq-answer {
+        max-height: 0;
+        padding: 0 24px;
+        background: var(--cream);
+        overflow: hidden;
+        transition:
+          max-height 0.4s ease-out,
+          padding 0.4s ease;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 200px;
+        padding: 0 24px 20px;
+      }
+
+      .faq-item.active .faq-question {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .faq-icon {
+        transition: transform 0.3s ease;
+      }
+
+      .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+      }
+
+      @media (max-width: 768px) {
+        .nav {
+          flex-direction: column;
+          gap: 15px;
+          padding: 15px 10px;
+        }
+
+        .hero h1 {
+          font-size: 34px;
+        }
+
+        .hero p {
+          font-size: 18px;
+        }
+
+        .logo {
+          font-size: 24px;
+          justify-content: center;
+        }
+
+        nav {
+          text-align: center;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 5px;
+        }
+
+        nav a {
+          margin: 5px 8px;
+          font-size: 14px;
+        }
+      }
+
+      /* Weather Widget Styles */
+      .weather-card {
+        background: white;
+        padding: 30px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        text-align: center;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        border: 1px solid var(--green-soft);
+      }
+      .weather-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .temp {
+        font-size: 48px;
+        font-weight: 800;
+        color: var(--green-dark);
+      }
+      .weather-desc {
+        font-size: 20px;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+      .weather-icon img {
+        width: 80px;
+      }
+      .weather-meta {
+        display: flex;
+        gap: 20px;
+        color: #666;
+      }
+
+      .weather-search {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .weather-search input {
+        flex: 1;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      .weather-search input:focus {
+        border-color: var(--green);
+      }
+
+      .weather-search button {
+        background: var(--green);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+      }
+
+      .weather-search button:hover {
+        background: var(--green-dark);
+      }
+
+      /* Expert Advice Button */
+      .expert-whatsapp {
+        background: #25d366;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+        transition: all 0.3s;
+        margin-top: 20px;
+      }
+      .expert-whatsapp:hover {
+        transform: translateY(-3px) scale(1.05);
+        background: #128c7e;
+      }
+
+      .expert-whatsapp svg {
+        width: 24px;
+        height: 24px;
+        fill: white;
+      }
+
+      /* New Feature CSS */
+      .floating-whatsapp {
+        position: fixed;
+        bottom: 90px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: #25d366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        z-index: 1000;
+        animation: pulse-wa 2s infinite;
+        transition: transform 0.3s;
+      }
+
+      .floating-whatsapp svg {
+        width: 35px;
+        height: 35px;
+        fill: white;
+      }
+
+      .floating-whatsapp:hover {
+        transform: scale(1.1);
+      }
+
+      @keyframes pulse-wa {
+        0% {
+          box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+        }
+
+        70% {
+          box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+        }
+
+        100% {
+          box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+        }
+      }
+
+      .brands-marquee-wrapper {
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 20px 0;
+        perspective: 1500px;
+      }
+
+      .brands-marquee-wrapper::before,
+      .brands-marquee-wrapper::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 120px;
+        height: 100%;
+        z-index: 5;
+        pointer-events: none;
+      }
+
+      .brands-marquee-wrapper::before {
+        left: 0;
+        background: linear-gradient(
+          to right,
+          var(--dynamic-bg, var(--beige)),
+          transparent
+        );
+      }
+
+      .brands-marquee-wrapper::after {
+        right: 0;
+        background: linear-gradient(
+          to left,
+          var(--dynamic-bg, var(--beige)),
+          transparent
+        );
+      }
+
+      .brands-marquee {
+        display: flex;
+        width: max-content;
+        animation: marquee 50s linear infinite;
+        transform-style: preserve-3d;
+      }
+
+      .brands-marquee:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateZ(0) translateX(0);
+        }
+
+        100% {
+          transform: translateZ(0) translateX(-10%);
+        }
+      }
+
+      .filter-btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        background: white;
+        color: var(--green-dark);
+        border: 1px solid var(--green);
+        padding: 8px 20px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--green);
+        color: white;
+        box-shadow: 0 4px 10px rgba(169, 199, 163, 0.4);
+      }
+
+      .product-card-wrap {
+        transition: all 0.4s ease;
+        transform-origin: center top;
+      }
+
+      .product-card-wrap.hide {
+        display: none;
+      }
+
+      .map-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 25px;
+        margin-bottom: 15px;
+      }
+
+      .map-tab-btn {
+        background: white;
+        color: var(--green-dark);
+        border: 1px solid var(--green);
+        padding: 8px 20px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .map-tab-btn:hover,
+      .map-tab-btn.active {
+        background: var(--green);
+        color: white;
+        box-shadow:
+          0 0 15px rgba(169, 199, 163, 0.8),
+          0 0 25px rgba(169, 199, 163, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .map-container {
+        margin-top: 10px;
+
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .map-container iframe {
+        width: 100%;
+        height: 350px;
+        border: 0;
+        display: block;
+      }
+
+      .form-group input.valid-input {
+        border-color: #4caf50;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 20px;
+        padding-right: 40px;
+      }
+
+      .form-group input.invalid-input {
+        border-color: #f44336;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f44336'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 20px;
+        padding-right: 40px;
+      }
+
+      /* Seed to Harvest Scroll Tracker */
       .scroll-journey {
-        display: none; /* Hide on mobile to prevent obscuring content */
+        position: fixed;
+        left: 40px;
+        top: 60px;
+        bottom: 40px;
+        width: 4px;
+        background: rgba(169, 199, 163, 0.2);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        pointer-events: none;
       }
-    }
 
-    /* Ambient Particles & Parallax */
-    #particles-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: -1;
-      pointer-events: none;
-    }
+      .scroll-stem {
+        width: 100%;
+        background: linear-gradient(
+          to bottom,
+          var(--green-dark),
+          var(--accent)
+        );
+        height: 0%;
+        border-radius: 4px;
+        transition: height 0.1s ease-out;
+      }
 
-    .particle {
-      position: absolute;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(200, 230, 150, 0.5) 40%, transparent 80%);
-      border-radius: 50%;
-      opacity: 0;
-    }
+      .scroll-icon-wrapper {
+        position: absolute;
+        top: 0%;
+        width: 50px;
+        height: 50px;
+        margin-left: 2px;
+        transform: translate(-50%, -50%);
+        background: var(--cream);
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition:
+          top 0.1s ease-out,
+          transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        color: var(--green-dark);
+      }
 
-    @keyframes floatParticle {
-      0% {
-        transform: translateY(100px) scale(0.8);
+      .scroll-icon-wrapper svg {
+        width: 28px;
+        height: 28px;
+        transition:
+          opacity 0.3s ease,
+          transform 0.4s ease;
+      }
+
+      .icon-spin {
+        animation: gentle-wobble 3s infinite ease-in-out;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @keyframes gentle-wobble {
+        0% {
+          transform: rotate(-5deg);
+        }
+        50% {
+          transform: rotate(5deg);
+        }
+        100% {
+          transform: rotate(-5deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .scroll-journey {
+          display: none; /* Hide on mobile to prevent obscuring content */
+        }
+      }
+
+      /* Ambient Particles & Parallax */
+      #particles-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(200, 230, 150, 0.5) 40%,
+          transparent 80%
+        );
+        border-radius: 50%;
         opacity: 0;
       }
-      20% {
+
+      @keyframes floatParticle {
+        0% {
+          transform: translateY(100px) scale(0.8);
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.6;
+        }
+        80% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translateY(-200px) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      .parallax-layer {
+        will-change: transform;
+        transition: transform 0.1s linear;
+      }
+
+      /* Background Animation Bubbles */
+      .bg-bubble {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
         opacity: 0.6;
+        animation: drift 20s infinite alternate ease-in-out;
+        pointer-events: none;
       }
-      80% {
-        opacity: 0.6;
+      .bg-bubble.b1 {
+        width: 400px;
+        height: 400px;
+        background: rgba(234, 179, 8, 0.15); /* Harvest yellow */
+        top: -50px;
+        left: -50px;
       }
-      100% {
-        transform: translateY(-200px) scale(1.2);
-        opacity: 0;
+      .bg-bubble.b2 {
+        width: 600px;
+        height: 600px;
+        background: rgba(21, 128, 61, 0.1); /* Fresh green */
+        bottom: -150px;
+        right: -100px;
+        animation-delay: -5s;
       }
-    }
+      .bg-bubble.b3 {
+        width: 350px;
+        height: 350px;
+        background: rgba(5, 150, 105, 0.12); /* Emerald */
+        top: 40%;
+        left: 40%;
+        animation-delay: -10s;
+      }
+      @keyframes drift {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          transform: translate(60px, 80px) scale(1.15);
+        }
+      }
+    </style>
+  </head>
 
-    .parallax-layer {
-      will-change: transform;
-      transition: transform 0.1s linear;
-    }
-
-    /* Background Animation Bubbles */
-    .bg-bubble {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.6;
-      animation: drift 20s infinite alternate ease-in-out;
-      pointer-events: none;
-    }
-    .bg-bubble.b1 {
-      width: 400px; height: 400px;
-      background: rgba(234, 179, 8, 0.15); /* Harvest yellow */
-      top: -50px; left: -50px;
-    }
-    .bg-bubble.b2 {
-      width: 600px; height: 600px;
-      background: rgba(21, 128, 61, 0.1); /* Fresh green */
-      bottom: -150px; right: -100px;
-      animation-delay: -5s;
-    }
-    .bg-bubble.b3 {
-      width: 350px; height: 350px;
-      background: rgba(5, 150, 105, 0.12); /* Emerald */
-      top: 40%; left: 40%;
-      animation-delay: -10s;
-    }
-    @keyframes drift {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(60px, 80px) scale(1.15); }
-    }
-  </style>
-</head>
-
-<body>
-  <div id="particles-container">
-    <div class="bg-bubble b1"></div>
-    <div class="bg-bubble b2"></div>
-    <div class="bg-bubble b3"></div>
-  </div>
-  <div class="scroll-journey" id="scrollJourney">
-    <div class="scroll-stem" id="scrollStem"></div>
-    <div class="scroll-icon-wrapper" id="scrollIconWrapper">
-      <div id="scrollIconContent" class="icon-spin">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22S7 16 7 11A5 5 0 0 1 17 11c0 5-5 11-5 11z"></path></svg>
-      </div>
+  <body>
+    <div id="particles-container">
+      <div class="bg-bubble b1"></div>
+      <div class="bg-bubble b2"></div>
+      <div class="bg-bubble b3"></div>
     </div>
-  </div>
-
-  <header>
-    <div class="nav">
-      <a href="#home" class="logo" translate="no">
-        <img src="images/Gemini Generated Image.png" alt="Krushikanchan Logo" class="header-logo">
-        <div class="logo-text">
-          <div class="mr-text">कृषि <span>कांचन</span></div>
-          <div class="en-text">Krushi <span>Kanchan</span></div>
+    <div class="scroll-journey" id="scrollJourney">
+      <div class="scroll-stem" id="scrollStem"></div>
+      <div class="scroll-icon-wrapper" id="scrollIconWrapper">
+        <div id="scrollIconContent" class="icon-spin">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22S7 16 7 11A5 5 0 0 1 17 11c0 5-5 11-5 11z"></path>
+          </svg>
         </div>
-      </a>
-      <nav>
-        <a href="#home">मुखपृष्ठ</a>
-        <a href="#about">आमच्याबद्दल</a>
-        <a href="#products">उत्पादने</a>
-        <a href="#brands">ब्रँड्स</a>
-        <a href="#farmer-info">शेतकरी माहिती</a>
-        <a href="companies.html">आमच्याशी जोडा</a>
-        <a href="#contact">संपर्क</a>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <h1 id="displayHeroTitle">शेतकऱ्यांसाठी विश्वासार्ह कृषी सेवा आणि दर्जेदार उत्पादने</h1>
-      <p id="displayHeroSubtitle">कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके, तणनाशके आणि पीक
-        संरक्षणासाठी आवश्यक उपाय
-        उपलब्ध आहेत.</p>
-      <div class="btn-group">
-        <a class="btn btn-primary" href="#farmer-info">आत्ताच संपर्क करा</a>
-        <a class="btn btn-secondary" href="#brands">आमचे ब्रँड्स</a>
       </div>
     </div>
-  </section>
 
-  <!-- Weather Utility Section -->
-  <section id="utility" class="reveal" style="padding-top: 40px; padding-bottom: 0;">
-    <div class="weather-card">
-      <h2 class="section-title" style="margin-bottom: 5px;">हवामान अंदाज (Weather)</h2>
-      
-      <div class="weather-search">
-        <input type="text" id="cityInput" placeholder="शहराचे नाव प्रविष्ट करा (Enter City Name)" onkeypress="if(event.key === 'Enter') searchWeather()">
-        <button onclick="searchWeather()">शोधा (Search)</button>
+    <header>
+      <div class="nav">
+        <a href="#home" class="logo" translate="no">
+          <img
+            src="images/Gemini Generated Image.png"
+            alt="Krushikanchan Logo"
+            class="header-logo"
+          />
+          <div class="logo-text">
+            <div class="mr-text">कृषि <span>कांचन</span></div>
+            <div class="en-text">Krushi <span>Kanchan</span></div>
+          </div>
+        </a>
+        <nav>
+          <a href="#home">मुखपृष्ठ</a>
+          <a href="#about">आमच्याबद्दल</a>
+          <a href="#products">उत्पादने</a>
+          <a href="#brands">ब्रँड्स</a>
+          <a href="#farmer-info">शेतकरी माहिती</a>
+          <a href="companies.html">आमच्याशी जोडा</a>
+          <a href="#contact">संपर्क</a>
+        </nav>
       </div>
+    </header>
 
-      <p id="weatherCityName" style="margin-bottom: 10px;">कोरेगाव, सातारा परिसरातील हवामान</p>
-      <div id="weatherBody" class="weather-info">
-        <div class="temp">--°C</div>
-        <div class="weather-desc">Loading...</div>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1 id="displayHeroTitle">
+          शेतकऱ्यांसाठी विश्वासार्ह कृषी सेवा आणि दर्जेदार उत्पादने
+        </h1>
+        <p id="displayHeroSubtitle">
+          कृषि कांचन येथे नामांकित कंपन्यांची खते, कीटकनाशके, बुरशीनाशके,
+          तणनाशके आणि पीक संरक्षणासाठी आवश्यक उपाय उपलब्ध आहेत.
+        </p>
+        <div class="btn-group">
+          <a class="btn btn-primary" href="#farmer-info">आत्ताच संपर्क करा</a>
+          <a class="btn btn-secondary" href="#brands">आमचे ब्रँड्स</a>
+        </div>
       </div>
-      <div class="weather-meta" id="weatherMeta">
-        <span>वारा: -- km/h</span>
-        <span>आद्रता: --%</span>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="about" class="reveal">
-    <h2 class="section-title">आमच्याबद्दल</h2>
-    <p class="section-sub">सातारा, कोरेगाव आणि भिलार परिसरातील शेतकऱ्यांसाठी विश्वासार्ह कृषी सेवा केंद्र.</p>
-    <div class="about-box">
-      <p id="displayAboutText">
-        कृषि कांचन हे शेतकऱ्यांसाठी अस्सल कृषी औषधे, खते, कीटकनाशके आणि पीक संरक्षण उत्पादने उपलब्ध करून देणारे
-        विश्वासार्ह केंद्र आहे.
-        आम्ही नामांकित MNC ब्रँड्सची उत्पादने, योग्य माहिती आणि शेतकरी-केंद्रित सेवा देण्यावर भर देतो.
+    <!-- Weather Utility Section -->
+    <section
+      id="utility"
+      class="reveal"
+      style="padding-top: 40px; padding-bottom: 0"
+    >
+      <div class="weather-card">
+        <h2 class="section-title" style="margin-bottom: 5px">
+          हवामान अंदाज (Weather)
+        </h2>
+
+        <div class="weather-search">
+          <input
+            type="text"
+            id="cityInput"
+            placeholder="शहराचे नाव प्रविष्ट करा (Enter City Name)"
+            onkeypress="if (event.key === 'Enter') searchWeather();"
+          />
+          <button onclick="searchWeather()">शोधा (Search)</button>
+        </div>
+
+        <p id="weatherCityName" style="margin-bottom: 10px">
+          कोरेगाव, सातारा परिसरातील हवामान
+        </p>
+        <div id="weatherBody" class="weather-info">
+          <div class="temp">--°C</div>
+          <div class="weather-desc">Loading...</div>
+        </div>
+        <div class="weather-meta" id="weatherMeta">
+          <span>वारा: -- km/h</span>
+          <span>आद्रता: --%</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal">
+      <h2 class="section-title">आमच्याबद्दल</h2>
+      <p class="section-sub">
+        सातारा, कोरेगाव आणि भिलार परिसरातील शेतकऱ्यांसाठी विश्वासार्ह कृषी सेवा
+        केंद्र.
       </p>
-    </div>
-  </section>
-
-  <section id="products" class="reveal">
-    <h2 class="section-title">आमची उत्पादने</h2>
-    <p class="section-sub">तुमच्या पिकांसाठी निवडक आणि परिणामकारक कृषी उपाय.</p>
-
-    <div class="filter-btn-group" id="productFilters">
-      <button class="filter-btn active" data-filter="all">सर्व</button>
-      <button class="filter-btn" data-filter="FERTILIZER">खते</button>
-      <button class="filter-btn" data-filter="PESTICIDE">कीटकनाशके</button>
-      <button class="filter-btn" data-filter="FUNGICIDE">बुरशीनाशके</button>
-      <button class="filter-btn" data-filter="HERBICIDE">तणनाशके</button>
-      <button class="filter-btn" data-filter="SEED">बियाणे</button>
-    </div>
-    <div class="grid" id="productGrid">
-      <!-- Products will be loaded dynamically via JS -->
-    </div>
-  </section>
-
-  <section id="brands" class="reveal">
-    <h2 class="section-title">सर्वोत्तम ब्रँड्स चे अधिकृत विक्रेते </h2>
-    <p class="section-sub">नामांकित कंपन्यांची उत्पादने उत्तम दारात मिळतील.</p>
-
-    <div class="brands-marquee-wrapper">
-      <div class="brands-marquee" id="brandsMarquee">
-        <!-- Brands will be loaded dynamically via JS -->
+      <div class="about-box">
+        <p id="displayAboutText">
+          कृषि कांचन हे शेतकऱ्यांसाठी अस्सल कृषी औषधे, खते, कीटकनाशके आणि पीक
+          संरक्षण उत्पादने उपलब्ध करून देणारे विश्वासार्ह केंद्र आहे. आम्ही
+          नामांकित MNC ब्रँड्सची उत्पादने, योग्य माहिती आणि शेतकरी-केंद्रित सेवा
+          देण्यावर भर देतो.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="farmer-info" class="reveal">
-    <h2 class="section-title">शेतकरी माहिती</h2>
-    <p class="section-sub">तज्ञ मार्गदर्शनासाठी तुमची माहिती भरा किंवा थेट WhatsApp वर संपर्क साधा.</p>
-    
-    <div style="text-align: center; margin-bottom: 40px;">
-      <a href="https://wa.me/919420630236?text=नमस्ते%20कृषि%20कांचन,%20मला%20पीक%20सल्ल्यासाठी%20मदत%20हवी%20आहे." class="expert-whatsapp" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        पिकाबद्दल तज्ञ सल्ला घ्या (WhatsApp Expert Advice)
-      </a>
-    </div>
+    <section id="products" class="reveal">
+      <h2 class="section-title">आमची उत्पादने</h2>
+      <p class="section-sub">
+        तुमच्या पिकांसाठी निवडक आणि परिणामकारक कृषी उपाय.
+      </p>
 
-    <div class="form-container">
-      <form id="leadForm">
-        <div class="form-group">
-          <label for="fname">संपूर्ण नाव</label>
-          <input type="text" id="fname" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">मोबाईल नंबर</label>
-          <input type="tel" id="phone" required>
-        </div>
-        <div class="form-group">
-          <label for="location">गाव / पत्ता</label>
-          <input type="text" id="location" required>
-        </div>
-        <div class="form-group">
-          <label for="crop">पिकाचा प्रकार</label>
-          <input type="text" id="crop" required>
-        </div>
-        <div class="form-group">
-          <label for="duration">पिकाचा कालावधी</label>
-          <input type="text" id="duration" placeholder="उदा. ३ महिने">
-        </div>
-        <div class="form-group">
-          <label for="area">शेतीचे क्षेत्र (एकर)</label>
-          <input type="number" id="area" step="0.1">
-        </div>
-        <button type="submit" class="btn btn-primary btn-submit">माहिती सबमिट करा</button>
-      </form>
-    </div>
-  </section>
+      <div class="filter-btn-group" id="productFilters">
+        <button class="filter-btn active" data-filter="all">सर्व</button>
+        <button class="filter-btn" data-filter="FERTILIZER">खते</button>
+        <button class="filter-btn" data-filter="PESTICIDE">कीटकनाशके</button>
+        <button class="filter-btn" data-filter="FUNGICIDE">बुरशीनाशके</button>
+        <button class="filter-btn" data-filter="HERBICIDE">तणनाशके</button>
+        <button class="filter-btn" data-filter="SEED">बियाणे</button>
+      </div>
+      <div class="grid" id="productGrid">
+        <!-- Products will be loaded dynamically via JS -->
+      </div>
+    </section>
 
-  <section id="faq" class="reveal">
-    <h2 class="section-title">नेहमी विचारले जाणारे प्रश्न</h2>
-    <p class="section-sub">शेतकऱ्यांच्या मनातील काही सामान्य प्रश्नांची उत्तरे.</p>
-    <div style="max-width: 800px; margin: 0 auto;">
-      <div class="faq-item">
-        <div class="faq-question">तुमच्याकडे कोणत्या कंपन्यांची खते उपलब्ध आहेत? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">
-          <p style="padding-top: 10px;">आमच्याकडे Bayer, Syngenta, FMC, Dhanuka यांसारख्या नामांकित राष्ट्रीय व
-            आंतरराष्ट्रीय ब्रँड्सची सर्व प्रकारची खते आणि कीटकनाशके उपलब्ध आहेत.</p>
+    <section id="brands" class="reveal">
+      <h2 class="section-title">सर्वोत्तम ब्रँड्स चे अधिकृत विक्रेते</h2>
+      <p class="section-sub">
+        नामांकित कंपन्यांची उत्पादने उत्तम दारात मिळतील.
+      </p>
+
+      <div class="brands-marquee-wrapper">
+        <div class="brands-marquee" id="brandsMarquee">
+          <!-- Brands will be loaded dynamically via JS -->
         </div>
       </div>
-      <div class="faq-item">
-        <div class="faq-question">पिकांवरील रोगांसाठी मार्गदर्शन मिळेल का? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">
-          <p style="padding-top: 10px;">होय, तुम्ही आमच्या केंद्रावर येऊन किंवा WhatsApp वर फोटो पाठवून पिकांच्या
-            समस्यांवर तज्ञांचा मोफत सल्ला घेऊ शकता.</p>
+    </section>
+
+    <section id="farmer-info" class="reveal">
+      <h2 class="section-title">शेतकरी माहिती</h2>
+      <p class="section-sub">
+        तज्ञ मार्गदर्शनासाठी तुमची माहिती भरा किंवा थेट WhatsApp वर संपर्क साधा.
+      </p>
+
+      <div style="text-align: center; margin-bottom: 40px">
+        <a
+          href="https://wa.me/919420630236?text=नमस्ते%20कृषि%20कांचन,%20मला%20पीक%20सल्ल्यासाठी%20मदत%20हवी%20आहे."
+          class="expert-whatsapp"
+          target="_blank"
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+            />
+          </svg>
+          पिकाबद्दल तज्ञ सल्ला घ्या (WhatsApp Expert Advice)
+        </a>
+      </div>
+
+      <div class="form-container">
+        <form id="leadForm">
+          <div class="form-group">
+            <label for="fname">संपूर्ण नाव</label>
+            <input type="text" id="fname" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">मोबाईल नंबर</label>
+            <input type="tel" id="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="location">गाव / पत्ता</label>
+            <input type="text" id="location" required />
+          </div>
+          <div class="form-group">
+            <label for="crop">पिकाचा प्रकार</label>
+            <input type="text" id="crop" required />
+          </div>
+          <div class="form-group">
+            <label for="duration">पिकाचा कालावधी</label>
+            <input type="text" id="duration" placeholder="उदा. ३ महिने" />
+          </div>
+          <div class="form-group">
+            <label for="area">शेतीचे क्षेत्र (एकर)</label>
+            <input type="number" id="area" step="0.1" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-submit">
+            माहिती सबमिट करा
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="faq" class="reveal">
+      <h2 class="section-title">नेहमी विचारले जाणारे प्रश्न</h2>
+      <p class="section-sub">
+        शेतकऱ्यांच्या मनातील काही सामान्य प्रश्नांची उत्तरे.
+      </p>
+      <div style="max-width: 800px; margin: 0 auto">
+        <div class="faq-item">
+          <div class="faq-question">
+            तुमच्याकडे कोणत्या कंपन्यांची खते उपलब्ध आहेत?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p style="padding-top: 10px">
+              आमच्याकडे Bayer, Syngenta, FMC, Dhanuka यांसारख्या नामांकित
+              राष्ट्रीय व आंतरराष्ट्रीय ब्रँड्सची सर्व प्रकारची खते आणि
+              कीटकनाशके उपलब्ध आहेत.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            पिकांवरील रोगांसाठी मार्गदर्शन मिळेल का?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p style="padding-top: 10px">
+              होय, तुम्ही आमच्या केंद्रावर येऊन किंवा WhatsApp वर फोटो पाठवून
+              पिकांच्या समस्यांवर तज्ञांचा मोफत सल्ला घेऊ शकता.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            तुमचे सेवा क्षेत्र कोणते आहे? <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p style="padding-top: 10px">
+              आम्ही प्रामुख्याने सातारा, कोरेगाव आणि भिलार परिसरातील शेतकऱ्यांना
+              सेवा देतो.
+            </p>
+          </div>
         </div>
       </div>
-      <div class="faq-item">
-        <div class="faq-question">तुमचे सेवा क्षेत्र कोणते आहे? <span class="faq-icon">+</span></div>
-        <div class="faq-answer">
-          <p style="padding-top: 10px;">आम्ही प्रामुख्याने सातारा, कोरेगाव आणि भिलार परिसरातील शेतकऱ्यांना सेवा देतो.
-          </p>
+    </section>
+
+    <!-- Script variable for iframe submission tracking -->
+    <script>
+      var submitted = false;
+    </script>
+
+    <section id="contact" class="reveal">
+      <h2 class="section-title">संपर्क</h2>
+      <div class="contact-box">
+        <p>
+          <strong>सेवा क्षेत्र:</strong>
+          <span id="displayContactArea">सातारा, कोरेगाव आणि भिलार</span>
+        </p>
+        <p>
+          <strong>मोबाईल:</strong>
+          <a href="tel:9420630236" class="dynamic-tel-link"
+            ><span class="dynamic-mobile-text">9420630236</span></a
+          >
+        </p>
+        <p>
+          <strong>WhatsApp:</strong>
+          <a
+            href="https://wa.me/919420630236"
+            class="dynamic-wa-link"
+            target="_blank"
+            ><span class="dynamic-mobile-text">9420630236</span></a
+          >
+        </p>
+        <p>
+          <strong>ईमेल:</strong>
+          <a href="mailto:Krushikanchan@gmail.com" class="dynamic-email-link"
+            ><span class="dynamic-email-text">Krushikanchan@gmail.com</span></a
+          >
+        </p>
+        <p>
+          <strong>सूचना:</strong> कृषी औषधांचा वापर तज्ञांच्या सल्ल्याने करावा.
+        </p>
+        <a
+          class="btn btn-primary dynamic-wa-link"
+          href="https://wa.me/919420630236"
+          target="_blank"
+          style="margin-top: 15px; display: inline-block"
+          >WhatsApp वर संपर्क करा</a
+        >
+
+        <div class="map-tabs">
+          <button class="map-tab-btn active" data-map="koregaon">
+            Koregaon Branch
+          </button>
+          <button class="map-tab-btn" data-map="bhilar">Bhilar Branch</button>
+          <button class="map-tab-btn" data-map="satara">Satara Branch</button>
+        </div>
+        <div class="map-container">
+          <!-- Default map is Koregaon -->
+          <iframe
+            id="store-map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3800.9321730035376!2d74.15536367605712!3d17.70066399370291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc235504ea1c6a3%3A0x2154ea5b68cdb8c5!2sKRUSHI%20KANCHAN%20KOREGAON!5e0!3m2!1sen!2sin!4v1773258833391!5m2!1sen!2sin"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
+    </section>
+
+    <footer>
+      <p>© 2026 KRUSHI KANCHAN | All Rights Reserved</p>
+    </footer>
+
+    <a
+      href="https://wa.me/919420630236"
+      class="floating-whatsapp dynamic-wa-link"
+      target="_blank"
+      title="WhatsApp वर संपर्क करा"
+      aria-label="WhatsApp"
+    >
+      <svg viewBox="0 0 32 32">
+        <path
+          d="M16 2.002a13.982 13.982 0 00-11.892 21.36l-2.062 7.538 7.712-2.022A13.957 13.957 0 0016 30.002c7.732 0 14-6.268 14-14s-6.268-14-14-14zm0 25.64c-2.454 0-4.792-.638-6.848-1.856l-.492-.292-5.094 1.336 1.352-4.966-.32-.51a11.583 11.583 0 01-2.23-6.992c0-6.425 5.215-11.64 11.64-11.64s11.64 5.215 11.64 11.64-5.215 11.64-11.64 11.64zm6.364-8.682c-.348-.174-2.064-1.018-2.384-1.134-.32-.116-.552-.174-.784.174-.232.348-.9 1.134-1.104 1.366-.204.232-.408.26-.756.088-.348-.174-1.472-.544-2.804-1.734-.1-.09-.204-.184-.31-.284-1.226-1.144-1.636-1.558-1.84-1.906-.204-.348-.022-.536.152-.71.156-.156.348-.406.522-.61.174-.204.232-.348.348-.58.116-.232.058-.436-.03-.61-.088-.174-.784-1.892-1.074-2.59-.282-.682-.572-.59-.784-.6-.2-.01-.432-.01-.664-.01s-.61.088-.93.436c-.32.348-1.22 1.192-1.22 2.906s1.25 3.37 1.424 3.6c.174.232 2.45 3.742 5.936 5.244.83.358 1.48.572 1.986.732.834.266 1.594.228 2.194.138.67-.1 2.064-.842 2.354-1.654.29-.812.29-1.508.204-1.654-.088-.146-.32-.232-.668-.406z"
+        />
+      </svg>
+    </a>
+    <div id="toast-container" class="toast-container"></div>
+    <a href="#home" class="back-to-top" id="backToTop">↑</a>
+    <div class="lightbox" id="lightbox">
+      <span class="lightbox-close" id="lightboxClose">&times;</span>
+      <img src="" alt="Fullscreen Image" id="lightboxImg" />
     </div>
-  </section>
 
-  <!-- Script variable for iframe submission tracking -->
-  <script>var submitted = false;</script>
+    <script>
+      // 1. Toast Notification System
+      function showToast(message) {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.innerHTML = `<span>✅</span> ${message}`;
+        container.appendChild(toast);
 
-  <section id="contact" class="reveal">
-    <h2 class="section-title">संपर्क</h2>
-    <div class="contact-box">
-      <p><strong>सेवा क्षेत्र:</strong> <span id="displayContactArea">सातारा, कोरेगाव आणि भिलार</span></p>
-      <p><strong>मोबाईल:</strong> <a href="tel:9420630236" class="dynamic-tel-link"><span
-            class="dynamic-mobile-text">9420630236</span></a></p>
-      <p><strong>WhatsApp:</strong> <a href="https://wa.me/919420630236" class="dynamic-wa-link" target="_blank"><span
-            class="dynamic-mobile-text">9420630236</span></a></p>
-      <p><strong>ईमेल:</strong> <a href="mailto:Krushikanchan@gmail.com" class="dynamic-email-link"><span
-            class="dynamic-email-text">Krushikanchan@gmail.com</span></a></p>
-      <p><strong>सूचना:</strong> कृषी औषधांचा वापर तज्ञांच्या सल्ल्याने करावा.</p>
-      <a class="btn btn-primary dynamic-wa-link" href="https://wa.me/919420630236" target="_blank"
-        style="margin-top: 15px; display: inline-block;">WhatsApp वर संपर्क करा</a>
+        // Trigger animation
+        setTimeout(() => toast.classList.add("show"), 10);
 
+        // Auto remove
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 400);
+        }, 3500);
+      }
 
-      <div class="map-tabs">
-        <button class="map-tab-btn active" data-map="koregaon">Koregaon Branch</button>
-        <button class="map-tab-btn" data-map="bhilar">Bhilar Branch</button>
-        <button class="map-tab-btn" data-map="satara">Satara Branch</button>
-      </div>
-      <div class="map-container">
-        <!-- Default map is Koregaon -->
-        <iframe id="store-map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3800.9321730035376!2d74.15536367605712!3d17.70066399370291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc235504ea1c6a3%3A0x2154ea5b68cdb8c5!2sKRUSHI%20KANCHAN%20KOREGAON!5e0!3m2!1sen!2sin!4v1773258833391!5m2!1sen!2sin"
-          width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-    </div>
-  </section>
+      // 2. Scroll Reveal Animation
+      const revealElements = document.querySelectorAll(".reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              revealObserver.unobserve(entry.target); // Only animate once
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+      );
 
-  <footer>
-    <p>© 2026 KRUSHI KANCHAN | All Rights Reserved</p>
-  </footer>
+      revealElements.forEach((el) => revealObserver.observe(el));
 
+      // 3. Active Nav Highlighting & Back to Top Button
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll("nav a");
+      const backToTop = document.getElementById("backToTop");
 
-  <a href="https://wa.me/919420630236" class="floating-whatsapp dynamic-wa-link" target="_blank"
-    title="WhatsApp वर संपर्क करा" aria-label="WhatsApp">
-    <svg viewBox="0 0 32 32">
-      <path
-        d="M16 2.002a13.982 13.982 0 00-11.892 21.36l-2.062 7.538 7.712-2.022A13.957 13.957 0 0016 30.002c7.732 0 14-6.268 14-14s-6.268-14-14-14zm0 25.64c-2.454 0-4.792-.638-6.848-1.856l-.492-.292-5.094 1.336 1.352-4.966-.32-.51a11.583 11.583 0 01-2.23-6.992c0-6.425 5.215-11.64 11.64-11.64s11.64 5.215 11.64 11.64-5.215 11.64-11.64 11.64zm6.364-8.682c-.348-.174-2.064-1.018-2.384-1.134-.32-.116-.552-.174-.784.174-.232.348-.9 1.134-1.104 1.366-.204.232-.408.26-.756.088-.348-.174-1.472-.544-2.804-1.734-.1-.09-.204-.184-.31-.284-1.226-1.144-1.636-1.558-1.84-1.906-.204-.348-.022-.536.152-.71.156-.156.348-.406.522-.61.174-.204.232-.348.348-.58.116-.232.058-.436-.03-.61-.088-.174-.784-1.892-1.074-2.59-.282-.682-.572-.59-.784-.6-.2-.01-.432-.01-.664-.01s-.61.088-.93.436c-.32.348-1.22 1.192-1.22 2.906s1.25 3.37 1.424 3.6c.174.232 2.45 3.742 5.936 5.244.83.358 1.48.572 1.986.732.834.266 1.594.228 2.194.138.67-.1 2.064-.842 2.354-1.654.29-.812.29-1.508.204-1.654-.088-.146-.32-.232-.668-.406z" />
-    </svg>
-  </a>
-  <div id="toast-container" class="toast-container"></div>
-  <a href="#home" class="back-to-top" id="backToTop">↑</a>
-  <div class="lightbox" id="lightbox">
-    <span class="lightbox-close" id="lightboxClose">&times;</span>
-    <img src="" alt="Fullscreen Image" id="lightboxImg">
-  </div>
+      window.addEventListener("scroll", () => {
+        let current = "";
+        const scrollY = window.pageYOffset;
 
-  <script>
-    // 1. Toast Notification System
-    function showToast(message) {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `<span>✅</span> ${message}`;
-      container.appendChild(toast);
-
-      // Trigger animation
-      setTimeout(() => toast.classList.add('show'), 10);
-
-      // Auto remove
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 400);
-      }, 3500);
-    }
-
-    // 2. Scroll Reveal Animation
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          revealObserver.unobserve(entry.target); // Only animate once
+        // Toggle back to top button
+        if (scrollY > 400) {
+          backToTop.classList.add("visible");
+        } else {
+          backToTop.classList.remove("visible");
         }
-      });
-    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (scrollY >= sectionTop - sectionHeight / 3) {
+            current = section.getAttribute("id");
+          }
+        });
 
-    // 3. Active Nav Highlighting & Back to Top Button
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav a');
-    const backToTop = document.getElementById('backToTop');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      const scrollY = window.pageYOffset;
-
-      // Toggle back to top button
-      if (scrollY > 400) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - sectionHeight / 3)) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.style.color = '';
-        link.style.borderBottom = '';
-        if (link.getAttribute('href') === `#${current}`) {
-          link.style.color = '#dff1d8';
-          link.style.borderBottom = '2px solid #dff1d8';
-        }
-      });
-    });
-
-    // 4. Lightbox functionality
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxClose = document.getElementById('lightboxClose');
-    const productImages = document.querySelectorAll('.product-image, .brand-item img');
-
-    productImages.forEach(img => {
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightbox.classList.add('active');
-      });
-    });
-
-    const closeLightbox = () => lightbox.classList.remove('active');
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
-
-
-    // 6. Smart Form Validation
-    const inputs = document.querySelectorAll('.form-group input');
-    inputs.forEach(input => {
-      input.addEventListener('input', () => validateInput(input));
-      input.addEventListener('blur', () => validateInput(input));
-    });
-
-    function validateInput(input) {
-      if (input.value.trim() === '') {
-        input.classList.remove('valid-input', 'invalid-input');
-        return;
-      }
-
-      let isValid = true;
-      if (input.type === 'tel') {
-        isValid = /^\d{10}$/.test(input.value.replace(/[^\d]/g, ''));
-      } else if (input.type === 'email') {
-        isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
-      } else {
-        isValid = input.value.trim().length > 2;
-      }
-
-      if (isValid) {
-        input.classList.add('valid-input');
-        input.classList.remove('invalid-input');
-      } else {
-        input.classList.add('invalid-input');
-        input.classList.remove('valid-input');
-      }
-    }
-
-    // 7. Dynamic Products and Brands
-    function attachLightboxEvents() {
-      const productImages = document.querySelectorAll('.product-image, .brand-item img');
-      productImages.forEach(img => {
-        img.style.cursor = 'pointer';
-        img.addEventListener('click', () => {
-          lightboxImg.src = img.src;
-          lightbox.classList.add('active');
+        navLinks.forEach((link) => {
+          link.style.color = "";
+          link.style.borderBottom = "";
+          if (link.getAttribute("href") === `#${current}`) {
+            link.style.color = "#dff1d8";
+            link.style.borderBottom = "2px solid #dff1d8";
+          }
         });
       });
-    }
 
-    async function loadDynamicStoreContent() {
-      try {
-        // Load products
-        const prodRes = await fetch('/api/products');
-        const products = await prodRes.json();
-        const grid = document.getElementById('productGrid');
-        grid.innerHTML = '';
-        products.forEach(p => {
-          grid.innerHTML += `
+      // 4. Lightbox functionality
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      const lightboxClose = document.getElementById("lightboxClose");
+      const productImages = document.querySelectorAll(
+        ".product-image, .brand-item img",
+      );
+
+      productImages.forEach((img) => {
+        img.style.cursor = "pointer";
+        img.addEventListener("click", () => {
+          lightboxImg.src = img.src;
+          lightbox.classList.add("active");
+        });
+      });
+
+      const closeLightbox = () => lightbox.classList.remove("active");
+      lightboxClose.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      // 6. Smart Form Validation
+      const inputs = document.querySelectorAll(".form-group input");
+      inputs.forEach((input) => {
+        input.addEventListener("input", () => validateInput(input));
+        input.addEventListener("blur", () => validateInput(input));
+      });
+
+      function validateInput(input) {
+        if (input.value.trim() === "") {
+          input.classList.remove("valid-input", "invalid-input");
+          return;
+        }
+
+        let isValid = true;
+        if (input.type === "tel") {
+          isValid = /^\d{10}$/.test(input.value.replace(/[^\d]/g, ""));
+        } else if (input.type === "email") {
+          isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+        } else {
+          isValid = input.value.trim().length > 2;
+        }
+
+        if (isValid) {
+          input.classList.add("valid-input");
+          input.classList.remove("invalid-input");
+        } else {
+          input.classList.add("invalid-input");
+          input.classList.remove("valid-input");
+        }
+      }
+
+      // 7. Dynamic Products and Brands
+      function attachLightboxEvents() {
+        const productImages = document.querySelectorAll(
+          ".product-image, .brand-item img",
+        );
+        productImages.forEach((img) => {
+          img.style.cursor = "pointer";
+          img.addEventListener("click", () => {
+            lightboxImg.src = img.src;
+            lightbox.classList.add("active");
+          });
+        });
+      }
+
+      async function loadDynamicStoreContent() {
+        try {
+          // Load products
+          const prodRes = await fetch("/api/products");
+          const products = await prodRes.json();
+          const grid = document.getElementById("productGrid");
+          grid.innerHTML = "";
+          products.forEach((p) => {
+            grid.innerHTML += `
             <div class="product-card-wrap" data-category="${p.category}">
               <div class="card">
                 <img src="${p.image_path}" alt="${p.name}" class="product-image">
@@ -1489,382 +1656,439 @@
                 <p>${p.description}</p>
               </div>
             </div>`;
-        });
+          });
 
-        // Initialize Product Filters
-        const filterBtns = document.querySelectorAll('#productFilters .filter-btn');
-        filterBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+          // Initialize Product Filters
+          const filterBtns = document.querySelectorAll(
+            "#productFilters .filter-btn",
+          );
+          filterBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              filterBtns.forEach((b) => b.classList.remove("active"));
+              btn.classList.add("active");
 
-            const filterValue = btn.getAttribute('data-filter');
-            const productCards = document.querySelectorAll('.product-card-wrap');
-            productCards.forEach(card => {
-              if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                card.style.display = 'block';
-                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 10);
-                card.classList.remove('hide');
-              } else {
-                card.style.opacity = '0';
-                card.style.transform = 'scale(0.8)';
-                setTimeout(() => card.classList.add('hide'), 300);
-              }
+              const filterValue = btn.getAttribute("data-filter");
+              const productCards =
+                document.querySelectorAll(".product-card-wrap");
+              productCards.forEach((card) => {
+                if (
+                  filterValue === "all" ||
+                  card.getAttribute("data-category") === filterValue
+                ) {
+                  card.style.display = "block";
+                  setTimeout(() => {
+                    card.style.opacity = "1";
+                    card.style.transform = "scale(1)";
+                  }, 10);
+                  card.classList.remove("hide");
+                } else {
+                  card.style.opacity = "0";
+                  card.style.transform = "scale(0.8)";
+                  setTimeout(() => card.classList.add("hide"), 300);
+                }
+              });
             });
           });
-        });
 
-        // Load brands
-        const brandRes = await fetch('/api/brands');
-        const brands = await brandRes.json();
-        const marquee = document.getElementById('brandsMarquee');
-        marquee.innerHTML = '';
+          // Load brands
+          const brandRes = await fetch("/api/brands");
+          const brands = await brandRes.json();
+          const marquee = document.getElementById("brandsMarquee");
+          marquee.innerHTML = "";
 
-        let brandHtml = '';
-        brands.forEach(b => {
-          brandHtml += `
+          let brandHtml = "";
+          brands.forEach((b) => {
+            brandHtml += `
             <div class="brand-item" title="${b.name}">
               <a href="${b.website_url}" target="_blank"
                 style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100%; color: inherit;">
                 <img src="${b.image_path}" alt="${b.name}"><span>${b.name}</span>
               </a>
             </div>`;
-        });
-        // Duplicate for seamless scroll on wide screens
-        marquee.innerHTML = brandHtml.repeat(10);
+          });
+          // Duplicate for seamless scroll on wide screens
+          marquee.innerHTML = brandHtml.repeat(10);
 
-        // Force an initial filter application to ensure visibility
-        const activeFilterBtn = document.querySelector('#productFilters .filter-btn.active');
-        if (activeFilterBtn) activeFilterBtn.click();
+          // Force an initial filter application to ensure visibility
+          const activeFilterBtn = document.querySelector(
+            "#productFilters .filter-btn.active",
+          );
+          if (activeFilterBtn) activeFilterBtn.click();
 
-        attachLightboxEvents();
-        console.log("Dynamic content loaded successfully");
-      } catch (e) {
-        console.error("Failed to load dynamic store items", e);
+          attachLightboxEvents();
+          console.log("Dynamic content loaded successfully");
+        } catch (e) {
+          console.error("Failed to load dynamic store items", e);
+        }
       }
-    }
 
-    // 8. Map Location Tabs
-    const mapTabs = document.querySelectorAll('.map-tab-btn');
-    const mapIframe = document.getElementById('store-map');
+      // 8. Map Location Tabs
+      const mapTabs = document.querySelectorAll(".map-tab-btn");
+      const mapIframe = document.getElementById("store-map");
 
-    const mapUrls = {
-      'koregaon': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3800.9321730035376!2d74.15536367605712!3d17.70066399370291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc235504ea1c6a3%3A0x2154ea5b68cdb8c5!2sKRUSHI%20KANCHAN%20KOREGAON!5e0!3m2!1sen!2sin!4v1773258833391!5m2!1sen!2sin',
-      'bhilar': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.3619082183513!2d73.75896817605998!3d17.915266287381957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc269237999c099%3A0x693627491488933e!2sKrushikanchan!5e0!3m2!1sen!2sin!4v1773258970864!5m2!1sen!2sin',  // Using general Bhilar map for now, can be updated with exact store URL
-      'satara': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.1501794340566!2d74.00136317605697!3d17.690364294004596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc23900121fbb45%3A0xc554f324f42cf55e!2sKRUSHI%20KANCHAN%20SATARA!5e0!3m2!1sen!2sin!4v1773259506436!5m2!1sen!2sin'
-    };
+      const mapUrls = {
+        koregaon:
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3800.9321730035376!2d74.15536367605712!3d17.70066399370291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc235504ea1c6a3%3A0x2154ea5b68cdb8c5!2sKRUSHI%20KANCHAN%20KOREGAON!5e0!3m2!1sen!2sin!4v1773258833391!5m2!1sen!2sin",
+        bhilar:
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3796.3619082183513!2d73.75896817605998!3d17.915266287381957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc269237999c099%3A0x693627491488933e!2sKrushikanchan!5e0!3m2!1sen!2sin!4v1773258970864!5m2!1sen!2sin", // Using general Bhilar map for now, can be updated with exact store URL
+        satara:
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.1501794340566!2d74.00136317605697!3d17.690364294004596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc23900121fbb45%3A0xc554f324f42cf55e!2sKRUSHI%20KANCHAN%20SATARA!5e0!3m2!1sen!2sin!4v1773259506436!5m2!1sen!2sin",
+      };
 
-    mapTabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        mapTabs.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+      mapTabs.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          mapTabs.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
 
-        const mapKey = btn.getAttribute('data-map');
-        if (mapUrls[mapKey]) {
-          mapIframe.src = mapUrls[mapKey];
-        }
-      });
-    });
-
-    // 5. Accordion FAQ
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
-      question.addEventListener('click', () => {
-        // Close others (optional)
-        faqItems.forEach(faq => {
-          if (faq !== item) faq.classList.remove('active');
+          const mapKey = btn.getAttribute("data-map");
+          if (mapUrls[mapKey]) {
+            mapIframe.src = mapUrls[mapKey];
+          }
         });
-        item.classList.toggle('active');
       });
-    });
-    // 9. Weather Logic
-    async function fetchWeather(city = 'Koregaon,Satara') {
-      const weatherBody = document.getElementById('weatherBody');
-      const weatherMeta = document.getElementById('weatherMeta');
-      const weatherCityName = document.getElementById('weatherCityName');
-      
-      try {
-        // Using wttr.in with JSON format
-        const res = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
-        const data = await res.json();
-        
-        if (!data.current_condition) throw new Error("Invalid city");
 
-        const current = data.current_condition[0];
-        
-        const temp = current.temp_C;
-        const desc = current.weatherDesc[0].value;
-        const humidity = current.humidity;
-        const wind = current.windspeedKmph;
+      // 5. Accordion FAQ
+      const faqItems = document.querySelectorAll(".faq-item");
+      faqItems.forEach((item) => {
+        const question = item.querySelector(".faq-question");
+        question.addEventListener("click", () => {
+          // Close others (optional)
+          faqItems.forEach((faq) => {
+            if (faq !== item) faq.classList.remove("active");
+          });
+          item.classList.toggle("active");
+        });
+      });
+      // 9. Weather Logic
+      async function fetchWeather(city = "Koregaon,Satara") {
+        const weatherBody = document.getElementById("weatherBody");
+        const weatherMeta = document.getElementById("weatherMeta");
+        const weatherCityName = document.getElementById("weatherCityName");
 
-        // Extract city name from nearest_area if available
-        let displayCity = city;
-        if (data.nearest_area && data.nearest_area[0]) {
+        try {
+          // Using wttr.in with JSON format
+          const res = await fetch(
+            `https://wttr.in/${encodeURIComponent(city)}?format=j1`,
+          );
+          const data = await res.json();
+
+          if (!data.current_condition) throw new Error("Invalid city");
+
+          const current = data.current_condition[0];
+
+          const temp = current.temp_C;
+          const desc = current.weatherDesc[0].value;
+          const humidity = current.humidity;
+          const wind = current.windspeedKmph;
+
+          // Extract city name from nearest_area if available
+          let displayCity = city;
+          if (data.nearest_area && data.nearest_area[0]) {
             const area = data.nearest_area[0];
-            displayCity = area.areaName[0].value + (area.region ? `, ${area.region[0].value}` : '');
-        }
-        
-        if (weatherCityName) weatherCityName.innerText = displayCity + " परिसरातील हवामान";
+            displayCity =
+              area.areaName[0].value +
+              (area.region ? `, ${area.region[0].value}` : "");
+          }
 
-        weatherBody.innerHTML = `
+          if (weatherCityName)
+            weatherCityName.innerText = displayCity + " परिसरातील हवामान";
+
+          weatherBody.innerHTML = `
           <div class="temp">${temp}°C</div>
           <div class="weather-desc">${desc}</div>
         `;
-        weatherMeta.innerHTML = `
+          weatherMeta.innerHTML = `
           <span>वारा: ${wind} km/h</span>
           <span>आद्रता: ${humidity}%</span>
         `;
-      } catch (e) {
-        console.error("Weather fetch failed", e);
-        weatherBody.innerHTML = '<div class="weather-desc">Weather data unavailable</div>';
-      }
-    }
-
-    function searchWeather() {
-        const cityInput = document.getElementById('cityInput');
-        if (cityInput.value.trim()) {
-            fetchWeather(cityInput.value.trim());
+        } catch (e) {
+          console.error("Weather fetch failed", e);
+          weatherBody.innerHTML =
+            '<div class="weather-desc">Weather data unavailable</div>';
         }
-    }
+      }
 
-    // 10. Lead Form Submission
-    const leadForm = document.getElementById('leadForm');
-    if (leadForm) {
-      leadForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = leadForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerText;
-        
-        submitBtn.innerText = 'कृपया थांबा...';
-        submitBtn.disabled = true;
+      function searchWeather() {
+        const cityInput = document.getElementById("cityInput");
+        if (cityInput.value.trim()) {
+          fetchWeather(cityInput.value.trim());
+        }
+      }
 
-        const payload = {
-          name: document.getElementById('fname').value,
-          phone: document.getElementById('phone').value,
-          location: document.getElementById('location').value,
-          crop: document.getElementById('crop').value,
-          duration: document.getElementById('duration').value,
-          area: document.getElementById('area').value
-        };
+      // 10. Lead Form Submission
+      const leadForm = document.getElementById("leadForm");
+      if (leadForm) {
+        leadForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const submitBtn = leadForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerText;
+
+          submitBtn.innerText = "कृपया थांबा...";
+          submitBtn.disabled = true;
+
+          const payload = {
+            name: document.getElementById("fname").value,
+            phone: document.getElementById("phone").value,
+            location: document.getElementById("location").value,
+            crop: document.getElementById("crop").value,
+            duration: document.getElementById("duration").value,
+            area: document.getElementById("area").value,
+          };
+
+          try {
+            const res = await fetch("/api/leads", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            if (res.ok) {
+              showToast("तुमची माहिती यशस्वीरित्या जतन झाली आहे. धन्यवाद!");
+              leadForm.reset();
+              // Reset validation styles
+              leadForm
+                .querySelectorAll("input")
+                .forEach((input) =>
+                  input.classList.remove("valid-input", "invalid-input"),
+                );
+            } else {
+              const err = await res.json();
+              alert("Error: " + (err.error || "Failed to submit"));
+            }
+          } catch (error) {
+            console.error("Lead submission error", error);
+            alert("Network error. Please try again later.");
+          } finally {
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+          }
+        });
+      }
+
+      // Load Admin content overrides from API
+      window.addEventListener("DOMContentLoaded", async () => {
+        loadDynamicStoreContent();
+        fetchWeather();
 
         try {
-          const res = await fetch('/api/leads', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
+          const res = await fetch("/api/content");
           if (res.ok) {
-            showToast('तुमची माहिती यशस्वीरित्या जतन झाली आहे. धन्यवाद!');
-            leadForm.reset();
-            // Reset validation styles
-            leadForm.querySelectorAll('input').forEach(input => input.classList.remove('valid-input', 'invalid-input'));
-          } else {
-            const err = await res.json();
-            alert("Error: " + (err.error || "Failed to submit"));
+            const data = await res.json();
+
+            if (data.heroTitle) {
+              const title = document.getElementById("displayHeroTitle");
+              if (title) title.innerText = data.heroTitle;
+            }
+            if (data.heroSubtitle) {
+              const sub = document.getElementById("displayHeroSubtitle");
+              if (sub) sub.innerText = data.heroSubtitle;
+            }
+            if (data.aboutText) {
+              const abt = document.getElementById("displayAboutText");
+              if (abt) abt.innerText = data.aboutText;
+            }
+
+            // Contact details
+            if (data.contactArea) {
+              const area = document.getElementById("displayContactArea");
+              if (area) area.innerText = data.contactArea;
+            }
+
+            if (data.contactMobile) {
+              const mob = data.contactMobile;
+              document
+                .querySelectorAll(".dynamic-mobile-text")
+                .forEach((el) => (el.innerText = mob));
+              document
+                .querySelectorAll(".dynamic-tel-link")
+                .forEach((el) => (el.href = `tel:${mob}`));
+              document
+                .querySelectorAll(".dynamic-wa-link")
+                .forEach((el) => (el.href = `https://wa.me/91${mob}`));
+            }
+
+            if (data.contactEmail) {
+              const em = data.contactEmail;
+              document
+                .querySelectorAll(".dynamic-email-text")
+                .forEach((el) => (el.innerText = em));
+              document
+                .querySelectorAll(".dynamic-email-link")
+                .forEach((el) => (el.href = `mailto:${em}`));
+            }
           }
         } catch (error) {
-          console.error("Lead submission error", error);
-          alert("Network error. Please try again later.");
-        } finally {
-          submitBtn.innerText = originalText;
-          submitBtn.disabled = false;
+          console.error("Failed to fetch dynamic content", error);
         }
       });
-    }
 
-    // Load Admin content overrides from API
-    window.addEventListener('DOMContentLoaded', async () => {
-      loadDynamicStoreContent();
-      fetchWeather();
+      // 11. Seed to Harvest Scroll Tracker
+      const scrollJourney = document.getElementById("scrollJourney");
+      const scrollStem = document.getElementById("scrollStem");
+      const scrollIconWrapper = document.getElementById("scrollIconWrapper");
+      const scrollIconContent = document.getElementById("scrollIconContent");
 
-      try {
-        const res = await fetch('/api/content');
-        if (res.ok) {
-          const data = await res.json();
+      const journeySVGs = {
+        seed: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22S7 16 7 11A5 5 0 0 1 17 11c0 5-5 11-5 11z"></path></svg>',
+        sprout:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8 0 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 .1-4.9 2z"></path></svg>',
+        plant:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>',
+        harvest:
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 22v-4a2 2 0 1 0-4 0v4"/><path d="M18 10c0 4.4-3.6 8-8 8s-8-3.6-8-8c0-3.1 1.8-6 4.7-7.3A8 8 0 0 1 18 10z"/><circle cx="14" cy="7" r="1"/><circle cx="10" cy="12" r="1"/><circle cx="15" cy="13" r="1"/></svg>',
+      };
 
-          if (data.heroTitle) {
-            const title = document.getElementById('displayHeroTitle');
-            if (title) title.innerText = data.heroTitle;
-          }
-          if (data.heroSubtitle) {
-            const sub = document.getElementById('displayHeroSubtitle');
-            if (sub) sub.innerText = data.heroSubtitle;
-          }
-          if (data.aboutText) {
-            const abt = document.getElementById('displayAboutText');
-            if (abt) abt.innerText = data.aboutText;
-          }
+      let currentJourneyState = "seed";
 
-          // Contact details
-          if (data.contactArea) {
-            const area = document.getElementById('displayContactArea');
-            if (area) area.innerText = data.contactArea;
-          }
+      window.addEventListener("scroll", () => {
+        if (!scrollStem || !scrollIconWrapper) return;
 
-          if (data.contactMobile) {
-            const mob = data.contactMobile;
-            document.querySelectorAll('.dynamic-mobile-text').forEach(el => el.innerText = mob);
-            document.querySelectorAll('.dynamic-tel-link').forEach(el => el.href = `tel:${mob}`);
-            document.querySelectorAll('.dynamic-wa-link').forEach(el => el.href = `https://wa.me/91${mob}`);
-          }
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight;
+        const winHeight = window.innerHeight;
+        const scrollPercent = Math.min(
+          100,
+          Math.max(0, (scrollTop / (docHeight - winHeight)) * 100),
+        );
 
-          if (data.contactEmail) {
-            const em = data.contactEmail;
-            document.querySelectorAll('.dynamic-email-text').forEach(el => el.innerText = em);
-            document.querySelectorAll('.dynamic-email-link').forEach(el => el.href = `mailto:${em}`);
-          }
+        scrollStem.style.height = scrollPercent + "%";
+        scrollIconWrapper.style.top = scrollPercent + "%";
+
+        let newState = "seed";
+        if (scrollPercent >= 75) {
+          newState = "harvest";
+        } else if (scrollPercent >= 50) {
+          newState = "plant";
+        } else if (scrollPercent >= 25) {
+          newState = "sprout";
         }
-      } catch (error) {
-        console.error("Failed to fetch dynamic content", error);
-      }
-    });
 
-    // 11. Seed to Harvest Scroll Tracker
-    const scrollJourney = document.getElementById('scrollJourney');
-    const scrollStem = document.getElementById('scrollStem');
-    const scrollIconWrapper = document.getElementById('scrollIconWrapper');
-    const scrollIconContent = document.getElementById('scrollIconContent');
+        if (newState !== currentJourneyState) {
+          currentJourneyState = newState;
+          scrollIconContent.style.opacity = "0";
+          scrollIconContent.style.transform = "scale(0.5)";
 
-    const journeySVGs = {
-      seed: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22S7 16 7 11A5 5 0 0 1 17 11c0 5-5 11-5 11z"></path></svg>',
-      sprout: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"></path><path d="M10 20c5.5-2.5.8-6.4 3-10"></path><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8 0 4.4 0 5.5.8z"></path><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 .1-4.9 2z"></path></svg>',
-      plant: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>',
-      harvest: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 22v-4a2 2 0 1 0-4 0v4"/><path d="M18 10c0 4.4-3.6 8-8 8s-8-3.6-8-8c0-3.1 1.8-6 4.7-7.3A8 8 0 0 1 18 10z"/><circle cx="14" cy="7" r="1"/><circle cx="10" cy="12" r="1"/><circle cx="15" cy="13" r="1"/></svg>'
-    };
-
-    let currentJourneyState = 'seed';
-
-    window.addEventListener('scroll', () => {
-      if(!scrollStem || !scrollIconWrapper) return;
-      
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const scrollPercent = Math.min(100, Math.max(0, (scrollTop / (docHeight - winHeight)) * 100));
-
-      scrollStem.style.height = scrollPercent + '%';
-      scrollIconWrapper.style.top = scrollPercent + '%';
-      
-      let newState = 'seed';
-      if (scrollPercent >= 75) {
-        newState = 'harvest';
-      } else if (scrollPercent >= 50) {
-        newState = 'plant';
-      } else if (scrollPercent >= 25) {
-        newState = 'sprout';
-      }
-
-      if (newState !== currentJourneyState) {
-        currentJourneyState = newState;
-        scrollIconContent.style.opacity = '0';
-        scrollIconContent.style.transform = 'scale(0.5)';
-        
-        setTimeout(() => {
-          scrollIconContent.innerHTML = journeySVGs[newState];
-          scrollIconContent.style.opacity = '1';
-          scrollIconContent.style.transform = 'scale(1)';
-        }, 300);
-      }
-    });
-
-    // 12. Dynamic Scrollytelling: Sub-systems
-    const initDynamicScrollytelling = () => {
-      const body = document.body;
-      const particlesContainer = document.getElementById('particles-container');
-      
-      // Auto-tag elements for parallax
-      const parallaxCandidates = document.querySelectorAll('.card, .hero-content, .section-title');
-      parallaxCandidates.forEach(el => {
-        el.classList.add('parallax-layer');
-        const speed = el.classList.contains('card') ? (Math.random() * 0.1 + 0.05) : 0.05;
-        el.setAttribute('data-speed', speed);
+          setTimeout(() => {
+            scrollIconContent.innerHTML = journeySVGs[newState];
+            scrollIconContent.style.opacity = "1";
+            scrollIconContent.style.transform = "scale(1)";
+          }, 300);
+        }
       });
 
-      const parallaxLayers = document.querySelectorAll('.parallax-layer');
+      // 12. Dynamic Scrollytelling: Sub-systems
+      const initDynamicScrollytelling = () => {
+        const body = document.body;
+        const particlesContainer = document.getElementById(
+          "particles-container",
+        );
 
-      // Spawn glowing ambient particles (pollen)
-      const maxParticles = 25;
-      const createParticle = () => {
-        if(particlesContainer.children.length > maxParticles) return;
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        const size = Math.random() * 15 + 5;
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = Math.random() * 100 + 'vh';
-        const duration = Math.random() * 15 + 10;
-        particle.style.animation = `floatParticle ${duration}s infinite linear`;
-        particle.style.animationDelay = `-${Math.random() * 10}s`;
-        particlesContainer.appendChild(particle);
-      };
-      
-      for(let i=0; i<maxParticles; i++) createParticle();
+        // Auto-tag elements for parallax
+        const parallaxCandidates = document.querySelectorAll(
+          ".card, .hero-content, .section-title",
+        );
+        parallaxCandidates.forEach((el) => {
+          el.classList.add("parallax-layer");
+          const speed = el.classList.contains("card")
+            ? Math.random() * 0.1 + 0.05
+            : 0.05;
+          el.setAttribute("data-speed", speed);
+        });
 
-      // Scroll observer for parallax & bg color time-of-day
-      // Color interpolation: #f8f3ea (morning) -> #fdf0d5 (golden) -> #dfe6df (dusk)
-      const colors = {
-        morning: [248, 243, 234], // f8f3ea
-        golden: [253, 240, 213],  // fdf0d5
-        dusk: [223, 230, 223]     // dfe6df
-      };
+        const parallaxLayers = document.querySelectorAll(".parallax-layer");
 
-      const interpolateColor = (color1, color2, factor) => {
-        const r = Math.round(color1[0] + factor * (color2[0] - color1[0]));
-        const g = Math.round(color1[1] + factor * (color2[1] - color1[1]));
-        const b = Math.round(color1[2] + factor * (color2[2] - color1[2]));
-        return `rgb(${r}, ${g}, ${b})`;
-      };
+        // Spawn glowing ambient particles (pollen)
+        const maxParticles = 25;
+        const createParticle = () => {
+          if (particlesContainer.children.length > maxParticles) return;
+          const particle = document.createElement("div");
+          particle.classList.add("particle");
+          const size = Math.random() * 15 + 5;
+          particle.style.width = size + "px";
+          particle.style.height = size + "px";
+          particle.style.left = Math.random() * 100 + "vw";
+          particle.style.top = Math.random() * 100 + "vh";
+          const duration = Math.random() * 15 + 10;
+          particle.style.animation = `floatParticle ${duration}s infinite linear`;
+          particle.style.animationDelay = `-${Math.random() * 10}s`;
+          particlesContainer.appendChild(particle);
+        };
 
-      // Set initial bg
-      body.style.setProperty('--dynamic-bg', `rgb(${colors.morning.join(',')})`);
+        for (let i = 0; i < maxParticles; i++) createParticle();
 
-      let ticking = false;
-      window.addEventListener('scroll', () => {
-        if(!ticking) {
-          window.requestAnimationFrame(() => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight;
-            const winHeight = window.innerHeight;
-            const scrollPercent = scrollTop / Math.max(1, (docHeight - winHeight));
+        // Scroll observer for parallax & bg color time-of-day
+        // Color interpolation: #f8f3ea (morning) -> #fdf0d5 (golden) -> #dfe6df (dusk)
+        const colors = {
+          morning: [248, 243, 234], // f8f3ea
+          golden: [253, 240, 213], // fdf0d5
+          dusk: [223, 230, 223], // dfe6df
+        };
 
-            // Bg transition
-            let bgStr = '';
-            if (scrollPercent < 0.5) {
-              const factor = scrollPercent / 0.5;
-              bgStr = interpolateColor(colors.morning, colors.golden, Math.min(1, Math.max(0, factor)));
-            } else {
-              const factor = (scrollPercent - 0.5) / 0.5;
-              bgStr = interpolateColor(colors.golden, colors.dusk, Math.min(1, Math.max(0, factor)));
-            }
-            body.style.setProperty('--dynamic-bg', bgStr);
+        const interpolateColor = (color1, color2, factor) => {
+          const r = Math.round(color1[0] + factor * (color2[0] - color1[0]));
+          const g = Math.round(color1[1] + factor * (color2[1] - color1[1]));
+          const b = Math.round(color1[2] + factor * (color2[2] - color1[2]));
+          return `rgb(${r}, ${g}, ${b})`;
+        };
 
-            // Parallax element update (fixed overlap by making it relative to viewport center)
-            parallaxLayers.forEach(layer => {
-              const rect = layer.getBoundingClientRect();
-              // Only apply parallax if element is roughly on screen
-              if(rect.top < winHeight + 300 && rect.bottom > -300) {
-                 const speed = parseFloat(layer.getAttribute('data-speed')) || 0;
-                 // Calculate distance from center of viewport to center of element
-                 const centerOffset = (winHeight / 2) - (rect.top + (rect.height / 2));
-                 const yPos = centerOffset * speed;
-                 layer.style.transform = `translateY(${yPos}px)`;
+        // Set initial bg
+        body.style.setProperty(
+          "--dynamic-bg",
+          `rgb(${colors.morning.join(",")})`,
+        );
+
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              const scrollTop = window.scrollY;
+              const docHeight = document.documentElement.scrollHeight;
+              const winHeight = window.innerHeight;
+              const scrollPercent =
+                scrollTop / Math.max(1, docHeight - winHeight);
+
+              // Bg transition
+              let bgStr = "";
+              if (scrollPercent < 0.5) {
+                const factor = scrollPercent / 0.5;
+                bgStr = interpolateColor(
+                  colors.morning,
+                  colors.golden,
+                  Math.min(1, Math.max(0, factor)),
+                );
+              } else {
+                const factor = (scrollPercent - 0.5) / 0.5;
+                bgStr = interpolateColor(
+                  colors.golden,
+                  colors.dusk,
+                  Math.min(1, Math.max(0, factor)),
+                );
               }
+              body.style.setProperty("--dynamic-bg", bgStr);
+
+              // Parallax element update (fixed overlap by making it relative to viewport center)
+              parallaxLayers.forEach((layer) => {
+                const rect = layer.getBoundingClientRect();
+                // Only apply parallax if element is roughly on screen
+                if (rect.top < winHeight + 300 && rect.bottom > -300) {
+                  const speed =
+                    parseFloat(layer.getAttribute("data-speed")) || 0;
+                  // Calculate distance from center of viewport to center of element
+                  const centerOffset =
+                    winHeight / 2 - (rect.top + rect.height / 2);
+                  const yPos = centerOffset * speed;
+                  layer.style.transform = `translateY(${yPos}px)`;
+                }
+              });
+
+              ticking = false;
             });
-            
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-    };
+            ticking = true;
+          }
+        });
+      };
 
-    window.addEventListener('DOMContentLoaded', initDynamicScrollytelling);
-
-  </script>
-
-</body>
-
+      window.addEventListener("DOMContentLoaded", initDynamicScrollytelling);
+    </script>
+  </body>
 </html>
